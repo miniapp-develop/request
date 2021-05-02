@@ -1,0 +1,4 @@
+<view>
+    <button bind:tap="onTapGet">get</button>
+    <button bind:tap="onTapGet">post</button>
+</view>
