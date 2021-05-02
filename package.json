@@ -15,7 +15,9 @@
     "url": "https://github.com/miniapp-develop/request"
   },
   "homepage": "https://github.com/miniapp-develop/request",
-  "dependencies": {},
+  "dependencies": {
+    "@xesam/next": "0.0.1"
+  },
   "devDependencies": {
     "jest": "26.1.0"
   },

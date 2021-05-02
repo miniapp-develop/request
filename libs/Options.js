@@ -1,4 +1,5 @@
 const Options = {
+    url: 'url',
     data: 'data',
     method: 'method',
     headers: 'headers',

@@ -9,15 +9,15 @@ const NOP_PROXY = {
 };
 
 class HttpEngine {
-    constructor(proxy = runtime.host) {
-        this.proxy = proxy || NOP_PROXY;
+    constructor(proxy = NOP_PROXY) {
+        this.proxy = proxy;
     }
 
-    fetch(url, options) {
+    request(options) {
         return new Promise((resolve, reject) => {
             const task = this.proxy.request({
-                url: url,
-                method: options[Options.method],
+                url: options[Options.url],
+                method: options[Options.method] || 'GET',
                 data: options[Options.data],
                 header: options[Options.headers],
                 success(res) {
