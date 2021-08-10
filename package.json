@@ -1,6 +1,6 @@
 {
   "name": "@mini-dev/request",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "miniapp request",
   "miniprogram": "libs",
   "main": "libs/index.js",
@@ -16,7 +16,6 @@
   },
   "homepage": "https://github.com/miniapp-develop/request",
   "dependencies": {
-    "@xesam/next": "0.0.1"
   },
   "devDependencies": {
     "jest": "26.1.0"

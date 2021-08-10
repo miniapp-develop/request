@@ -2,18 +2,24 @@ const {request} = require('../../libs/index');
 
 request.addRequestInterceptor(req => {
     return new Promise(resolve => {
-        console.log('this is a request interceptor');
+        console.log('this is request interceptor A');
         setTimeout(function () {
             resolve(req);
         }, 1000);
     })
+}).addRequestInterceptor(req => {
+    console.log('this is request interceptor B');
+    return req;
 }).addResponseInterceptor(res => {
+    console.log('this is response interceptor A');
     return new Promise(resolve => {
-        console.log('this is a response interceptor');
         setTimeout(function () {
             resolve(res);
         }, 1000);
     })
+}).addResponseInterceptor(res => {
+    console.log('this is response interceptor B');
+    return res;
 })
 
 Page({
