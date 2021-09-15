@@ -1,6 +1,6 @@
 {
   "name": "@mini-dev/request",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "miniapp request",
   "miniprogram": "libs",
   "main": "libs/index.js",
