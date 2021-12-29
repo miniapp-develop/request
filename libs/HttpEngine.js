@@ -1,5 +1,3 @@
-const Options = require("./Options");
-
 const NOP_PROXY = {
     request: () => {
         return Promise.reject({
@@ -9,17 +7,16 @@ const NOP_PROXY = {
 };
 
 class HttpEngine {
-    constructor(proxy = NOP_PROXY) {
+    constructor(proxy = NOP_PROXY, preset = {}) {
         this.proxy = proxy;
+        this.preset = preset
     }
 
-    request(options) {
+    request(options = {}) {
         return new Promise((resolve, reject) => {
             const task = this.proxy.request({
-                url: options[Options.url],
-                method: options[Options.method] || 'GET',
-                data: options[Options.data],
-                header: options[Options.headers],
+                ...this.preset,
+                ...options,
                 success(res) {
                     resolve(res);
                 },
