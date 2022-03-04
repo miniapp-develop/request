@@ -1,5 +1,31 @@
 # miniapp request
 
+小程序 http 请求方法的封装。
+
+## 使用方法
+### 安装依赖
+
+```shell script
+npm i @mini-dev/request
+```
+
+### 创建 request 对象。
+
+```javascript
+const {request} = require('../../libs/index');
+request({...});
+```
+
+或者 
+
+```javascript
+const {request} = require('../../libs/index');
+const anotherRequest = request.create();
+anotherRequest({...});
+```
+
+### 添加拦截器
+
 ```javascript
 const {request} = require('../../libs/index');
 
@@ -25,12 +51,17 @@ request.addRequestInterceptor(req => {
     return res;
 })
 
+```
+
+### 页面调用
+
+```javascript
 Page({
     onLoad(query) {
     },
     onTapGet(e) {
         request({
-            url: 'https://www.baidu.com'
+            url: 'https://github.com/miniapp-develop/request'
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -38,5 +69,4 @@ Page({
         });
     }
 })
-
 ```
