@@ -1,3 +1,11 @@
 <view>
-    <button bind:tap="onTapGet">get</button>
+    <view class="action-vew" bind:tap="onTap" data-method="GET">GET</view>
+    <view class="action-vew" bind:tap="onTap" data-method="POST">POST</view>
+    <view class="action-vew" bind:tap="onTap" data-method="PUT">PUT</view>
+    <view class="action-vew" bind:tap="onTap" data-method="PATCH">PATCH</view>
+    <view class="action-vew" bind:tap="onTap" data-method="DELETE">DELETE</view>
+    <view class="action-vew" bind:tap="onTap" data-method="OPTIONS">OPTIONS</view>
+    <view class="action-vew" bind:tap="onTap" data-method="HEAD">HEAD</view>
+    <view class="action-vew" bind:tap="onTap" data-method="TRACE">TRACE</view>
+    <view class="action-vew" bind:tap="onTap" data-method="CONNECT">CONNECT</view>
 </view>

@@ -1,0 +1,6 @@
+.action-vew {
+    text-align: center;
+    padding: 0.8em;
+    background: white;
+    margin-top: 0.5em;
+}

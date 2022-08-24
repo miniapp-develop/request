@@ -3,6 +3,7 @@
 小程序 http 请求方法的封装。
 
 ## 使用方法
+
 ### 安装依赖
 
 ```shell script
@@ -12,14 +13,14 @@ npm i @mini-dev/request
 ### 创建 request 对象。
 
 ```javascript
-const {request} = require('../../libs/index');
+const {request} = require('@mini-dev/request');
 request({...});
 ```
 
 或者 
 
 ```javascript
-const {request} = require('../../libs/index');
+const {request} = require('@mini-dev/request');
 const anotherRequest = request.create();
 anotherRequest({...});
 ```
@@ -27,7 +28,7 @@ anotherRequest({...});
 ### 添加拦截器
 
 ```javascript
-const {request} = require('../../libs/index');
+const {request} = require('@mini-dev/request');
 
 request.addRequestInterceptor(req => {
     return new Promise(resolve => {
