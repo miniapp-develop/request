@@ -8,4 +8,6 @@
     <view class="action-vew" bind:tap="onTap" data-method="HEAD">HEAD</view>
     <view class="action-vew" bind:tap="onTap" data-method="TRACE">TRACE</view>
     <view class="action-vew" bind:tap="onTap" data-method="CONNECT">CONNECT</view>
+    <view class="action-vew" bind:tap="onTapTimeout">timeout</view>
+    <view class="action-vew" bind:tap="onTapAbort">abort</view>
 </view>

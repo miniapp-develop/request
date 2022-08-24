@@ -12,11 +12,14 @@ class HttpEngine {
         this.preset = preset
     }
 
-    request(options = {}) {
+    request(option = {}) {
         return new Promise((resolve, reject) => {
+            if (option.headers && !option.header) { //小程序的接口字段命名令人尴尬
+                option.header = option.headers;
+            }
             const task = this.proxy.request({
                 ...this.preset,
-                ...options,
+                ...option,
                 success(res) {
                     resolve(res);
                 },
@@ -27,8 +30,11 @@ class HttpEngine {
 
                 }
             });
-            if (options.signal) {
-                options.signal._attachTask_(task);
+            if (option.signal) {
+                option.signal._attachTask_(task);
+                if (option.signal.aborted) {
+                    task.abort();
+                }
             }
         });
     }

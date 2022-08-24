@@ -7,15 +7,19 @@ class AbortSignal {
     }
 
     _attachTask_(task) {
+        if (this.aborted) {
+            return;
+        }
         this._task = task;
     }
 
     _abort_() {
-        if (this._task && !this.aborted) {
+        this.aborted = true;
+        if (this._task) {
             this._task.abort();
-            this.aborted = true;
             this.onabort && this.onabort();
         }
+        this._task = null;
     }
 }
 

@@ -1,11 +1,11 @@
-const {request} = require('../../libs/index');
+const {request, AbortController} = require('../../libs/index');
 
 request.addRequestInterceptor(req => {
     return new Promise(resolve => {
         console.log('this is request interceptor A');
         setTimeout(function () {
             resolve(req);
-        }, 1000);
+        }, 500);
     })
 }).addRequestInterceptor(req => {
     console.log('this is request interceptor B');
@@ -15,7 +15,7 @@ request.addRequestInterceptor(req => {
     return new Promise(resolve => {
         setTimeout(function () {
             resolve(res);
-        }, 1000);
+        }, 500);
     })
 }).addResponseInterceptor(res => {
     console.log('this is response interceptor B');
@@ -135,5 +135,30 @@ Page({
                 console.error(err);
             });
         }
+    },
+    onTapTimeout() {
+        request({
+            url: 'https://httpbin.org/delay/8',
+            timeout: 3000,
+            header: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.error(err);
+        });
+    },
+    onTapAbort() {
+        const controller = new AbortController();
+        request({
+            url: 'https://httpbin.org/delay/8',
+            signal: controller.signal
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.error(err);
+        });
+        controller.abort();
     }
 })
