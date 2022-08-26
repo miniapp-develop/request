@@ -61,15 +61,19 @@ Page({
     onLoad(query) {
     },
     onTapGet(e) {
+        const controller = new AbortController();
         request({
-            url: 'https://github.com/miniapp-develop/request',
+            url: 'https://httpbin.org/get',
+            method:'get', //默认使用 get
             params:{},
-            data:{}
+            data:{},
+            signal: controller.signal
         }).then(res => {
             console.log(res);
         }).catch(err => {
             console.error(err);
         });
+        controller.abort();
     }
 })
 ```

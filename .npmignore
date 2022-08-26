@@ -2,6 +2,7 @@ pages*
 app*
 project.config.json
 package-lock.json
+miniprogram_npm
 node_modules
 sitemap.json
 .idea
