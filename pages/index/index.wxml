@@ -1,5 +1,6 @@
 <view>
     <view class="action-vew" bind:tap="onTap" data-method="GET">GET</view>
+    <view class="action-vew" bind:tap="onTap" data-method="GET WITH PARAMS">GET WITH PARAMS</view>
     <view class="action-vew" bind:tap="onTap" data-method="POST">POST</view>
     <view class="action-vew" bind:tap="onTap" data-method="PUT">PUT</view>
     <view class="action-vew" bind:tap="onTap" data-method="PATCH">PATCH</view>

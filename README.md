@@ -62,7 +62,9 @@ Page({
     },
     onTapGet(e) {
         request({
-            url: 'https://github.com/miniapp-develop/request'
+            url: 'https://github.com/miniapp-develop/request',
+            params:{},
+            data:{}
         }).then(res => {
             console.log(res);
         }).catch(err => {

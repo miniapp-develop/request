@@ -38,12 +38,26 @@ Page({
             }).catch(err => {
                 console.error(err);
             });
+        } else if (method === 'GET WITH PARAMS') {
+            request({
+                url: 'https://httpbin.org/get?urlname=urlget',
+                params: {
+                    name: 'get_params_name'
+                }
+            }).then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.error(err);
+            });
         } else if (method === 'POST') {
             request({
                 url: 'https://httpbin.org/post?urlname=urlpost',
                 method: 'post',
                 data: {
-                    name: 'post name'
+                    name: 'post_data_name'
+                },
+                params: {
+                    name: 'params_data_name'
                 }
             }).then(res => {
                 console.log(res);

@@ -6,6 +6,18 @@ const NOP_PROXY = {
     }
 };
 
+const qs = {
+    stringify(data) {
+        if (!data) {
+            return '';
+        }
+        return Object.entries(data)
+            .map(([key, value]) => {
+                return encodeURIComponent(key) + '=' + encodeURIComponent(value)
+            }).join('&');
+    }
+}
+
 class HttpEngine {
     constructor(proxy = NOP_PROXY, preset = {}) {
         this.proxy = proxy;
@@ -16,6 +28,28 @@ class HttpEngine {
         return new Promise((resolve, reject) => {
             if (option.headers && !option.header) { //小程序的接口字段命名令人尴尬
                 option.header = option.headers;
+            }
+            if (!option.method) {
+                option.method = 'GET';
+            }
+            //微信小程序的转换规则 https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html
+            if (option.params) {
+                if (option.method.toUpperCase() === 'GET') {
+                    if (!option.data || option.data.constructor !== Object) {
+                        option.data = option.params;
+                    }
+                } else {
+                    const queryString = qs.stringify(option.params);
+                    if (queryString.length) {
+                        if (option.url.indexOf('?') === -1) {
+                            option.url += '?' + queryString;
+                        } else if (option.url.endsWith('?')) {
+                            option.url += queryString;
+                        } else {
+                            option.url += '&' + queryString;
+                        }
+                    }
+                }
             }
             const task = this.proxy.request({
                 ...this.preset,
