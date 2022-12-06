@@ -1,6 +1,11 @@
 # miniapp request
 
-小程序 http 请求方法的封装。
+一个简单的小程序 request 封装，支持：
+
+1. 自定义拦截器（RequestInterceptor、ResponseInterceptor）；
+2. Promise；
+3. 取消请求；
+4. 更友好的接口字段命名；
 
 ## 使用方法
 
@@ -17,7 +22,7 @@ const {request} = require('@mini-dev/request');
 request({...});
 ```
 
-或者 
+上述方式引用的是默认 request 对象，如果需要多个不同的request，可以自行创建：
 
 ```javascript
 const {request} = require('@mini-dev/request');
@@ -54,6 +59,16 @@ request.addRequestInterceptor(req => {
 
 ```
 
+注意：上述拦截器的调用顺序为：
+
+    request interceptor B 
+    -> request interceptor A 
+    -> {http request}
+    -> response interceptor A 
+    -> response interceptor B
+
+即“洋葱顺序”。
+
 ### 页面调用
 
 ```javascript
@@ -64,9 +79,9 @@ Page({
         const controller = new AbortController();
         request({
             url: 'https://httpbin.org/get',
-            method:'get', //默认使用 get
-            params:{},
-            data:{},
+            method: 'get', //默认使用 get
+            params: {},
+            data: {},
             signal: controller.signal
         }).then(res => {
             console.log(res);
@@ -77,3 +92,7 @@ Page({
     }
 })
 ```
+
+## ChangeLogs
+
+### 0.1.0
