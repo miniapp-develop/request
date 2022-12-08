@@ -30,6 +30,31 @@ const anotherRequest = request.create();
 anotherRequest({...});
 ```
 
+### 发起请求
+
+```javascript
+const {request} = require('@mini-dev/request');
+request({
+    url: 'https://xxxxxxx',
+    method: 'post',
+    params: {
+        name: 'xesam'
+    },
+    data: {
+        name: 'xesam'
+    },
+    headers: {
+        auth: 'xxx'
+    }
+}).then(...).catch(...);
+```
+
+由于小程序的字段定义比较特异，所以对 option 做了一个略规范的定义：
+
+    method：如果没有设置，就使用 GET
+    params：添加到 url 上的参数
+    headers：请求头
+
 ### 添加拦截器
 
 ```javascript
@@ -59,7 +84,9 @@ request.addRequestInterceptor(req => {
 
 ```
 
-注意：上述拦截器的调用顺序为：
+对于 request 拦截器，先添加的拦截器都会**后**执行
+对于 response 拦截器，先添加的拦截器都会**先**执行。
+因此，上述拦截器的调用顺序为：
 
     request interceptor B 
     -> request interceptor A 

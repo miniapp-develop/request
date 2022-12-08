@@ -5,7 +5,7 @@
   "miniprogram": "libs",
   "main": "libs/index.js",
   "scripts": {
-    "test": "echo \\\"Error: no __tests__ specified\\\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
