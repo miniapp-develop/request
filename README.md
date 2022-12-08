@@ -1,11 +1,11 @@
 # miniapp request
 
-一个简单的小程序 request 封装，支持：
+一个简单的小程序 request 封装，在原有的小程序 request 上增加了以下支持：
 
 1. 自定义拦截器（RequestInterceptor、ResponseInterceptor）；
 2. Promise；
 3. 取消请求；
-4. 更友好的接口字段命名；
+4. 更常用的接口字段命名；
 
 ## 使用方法
 
@@ -53,7 +53,7 @@ request({
 
     method：如果没有设置，就使用 GET
     params：添加到 url 上的参数
-    headers：请求头
+    headers：请求头字段
 
 其他参数会原样传入。
 
@@ -96,8 +96,6 @@ request.addRequestInterceptor(req => {
     -> response interceptor A 
     -> response interceptor B
 
-即“洋葱顺序”。
-
 ### 页面调用
 
 ```javascript
@@ -110,7 +108,6 @@ Page({
             url: 'https://httpbin.org/get',
             method: 'get', //默认使用 get
             params: {},
-            data: {},
             signal: controller.signal
         }).then(res => {
             console.log(res);
@@ -126,4 +123,4 @@ Page({
 
 ### 0.1.0
 1. 拆分 VendorHttpEngine；
-2. 补全一部分 tests；
+2. 补全 tests；
