@@ -13,8 +13,8 @@ const qs = {
 }
 
 class VendorHttpEngine extends HttpEngine {
-    constructor(preset, proxy) {
-        super(...arguments);
+    constructor(proxy, preset = {}) {
+        super(preset);
         this._proxy = proxy;
     }
 
