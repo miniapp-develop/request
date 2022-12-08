@@ -1,13 +1,14 @@
-const HttpEngine = require('./HttpEngine');
+const VendorHttpEngine = require('./VendorHttpEngine');
+const EmptyHttpEngine = require('./EmptyHttpEngine');
 
 function _async(interceptors, data) {
     let index = 0;
     const next = function (res) {
-        const interceptor = interceptors[index++];
-        if (!interceptor) {
+        const nextInterceptor = interceptors[index++];
+        if (!nextInterceptor) {
             return Promise.resolve(res);
         }
-        const ret = interceptor.call(interceptor, res);
+        const ret = nextInterceptor.call(nextInterceptor, res);
         if (ret && ret.then) {
             return ret.then(next);
         } else {
@@ -17,7 +18,11 @@ function _async(interceptors, data) {
     return next(data);
 }
 
-function create(engine = typeof wx === 'object' ? new HttpEngine(wx) : null) {
+function getDefaultHttpEngine() {
+    return typeof wx === 'object' ? new VendorHttpEngine(wx) : new EmptyHttpEngine();
+}
+
+function create(engine = getDefaultHttpEngine()) {
     function _request(req) {
         return _request.handle(req);
     }

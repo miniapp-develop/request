@@ -3,16 +3,16 @@ describe('default exported', () => {
         jest.resetModules();
         global.wx = undefined;
     })
-    test('when wx is null then httpEngine is null', () => {
+    test('when wx is null then httpEngine is EmptyHttpEngine', () => {
         const request = require('../libs').request;
 
-        expect(request.engine).toBeNull();
+        expect(request.engine).toBeInstanceOf(require('../libs/EmptyHttpEngine'));
     })
-    test('when wx is not null then httpEngine is not null', () => {
+    test('when wx is not null then httpEngine is VendorHttpEngine', () => {
         global.wx = {};
         const request = require('../libs').request;
 
-        expect(request.engine).not.toBeNull();
+        expect(request.engine).toBeInstanceOf(require('../libs/VendorHttpEngine'));
     })
 })
 
@@ -21,16 +21,16 @@ describe('create', () => {
         jest.resetModules();
         global.wx = undefined;
     })
-    test('when create with default and wx is null then httpEngine is null', () => {
+    test('when create with default and wx is null then httpEngine is EmptyHttpEngine', () => {
         const request = require('../libs').request.create();
 
-        expect(request.engine).toBeNull();
+        expect(request.engine).toBeInstanceOf(require('../libs/EmptyHttpEngine'));
     })
-    test('when create with default and wx is not null then httpEngine is not null', () => {
+    test('when create with default and wx is not null then httpEngine is VendorHttpEngine', () => {
         global.wx = {};
         const request = require('../libs').request.create();
 
-        expect(request.engine).not.toBeNull();
+        expect(request.engine).toBeInstanceOf(require('../libs/VendorHttpEngine'));
     })
     test('when create with custom httpEngine then use the custom httpEngine', () => {
         const mockHttpEngine = jest.fn();

@@ -55,6 +55,8 @@ request({
     params：添加到 url 上的参数
     headers：请求头
 
+其他参数会原样传入。
+
 ### 添加拦截器
 
 ```javascript
