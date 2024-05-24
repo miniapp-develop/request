@@ -42,13 +42,15 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },
+  "miniprogramRoot": "sample/",
   "compileType": "miniprogram",
-  "libVersion": "2.4.4",
-  "appid": "wx132bb522ad967270",
+  "libVersion": "2.12.3",
+  "appid": "wx9029e39ac1befc18",
   "projectname": "miniapp-request",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "srcMiniprogramRoot": "sample/"
 }

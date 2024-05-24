@@ -1,5 +1,4 @@
-pages*
-app*
+sample
 project.config.json
 package-lock.json
 miniprogram_npm
@@ -8,3 +7,4 @@ sitemap.json
 .idea
 *.iml
 .npmrc
+project.private.config.json

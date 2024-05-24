@@ -1,0 +1,15 @@
+{
+    "name": "miniapp-request-sample",
+    "version": "0.2.0",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@mini-dev/request": "0.2.0"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": ""
+}
