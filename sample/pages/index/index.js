@@ -207,6 +207,12 @@ Page({
             header: {}
         }).then((res) => {
             console.log('onTapStream:res=', res);
+            res.data.on('data', (chunk) => {
+                console.log('onTapStream:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
+            });
+            res.data.on('end', () => {
+                console.log('onTapStream:end');
+            });
         }).catch((err) => {
             console.error('onTapStream:err=', err);
         });
@@ -218,9 +224,15 @@ Page({
             enableChunked: true,
             header: {}
         }).then((res) => {
-            console.log('onTapStream:res=', res);
+            console.log('onTapStreamTimeout:res=', res);
+            res.data.on('data', (chunk) => {
+                console.log('onTapStreamTimeout:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
+            });
+            res.data.on('end', () => {
+                console.log('onTapStreamTimeout:end');
+            });
         }).catch((err) => {
-            console.error('onTapStream:err=', err);
+            console.error('onTapStreamTimeout:err=', err);
         });
     }
 });

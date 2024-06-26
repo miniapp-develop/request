@@ -1,4 +1,5 @@
 const HttpEngine = require('./HttpEngine');
+const Response = require('./Response');
 
 const qs = {
     stringify(data) {
@@ -7,10 +8,10 @@ const qs = {
         }
         return Object.entries(data)
             .map(([key, value]) => {
-                return encodeURIComponent(key) + '=' + encodeURIComponent(value)
+                return encodeURIComponent(key) + '=' + encodeURIComponent(value);
             }).join('&');
     }
-}
+};
 
 class VendorHttpEngine extends HttpEngine {
     constructor(proxy, preset = {}) {
@@ -42,12 +43,18 @@ class VendorHttpEngine extends HttpEngine {
             }
         }
         return new Promise((resolve, reject) => {
+            const enableStream = !!option.enableChunked;
+            const response = new Response(enableStream);
             const task = this._proxy.request({
                 ...option,
                 success(res) {
-                    resolve(res);
+                    response._onSuccess(res);
+                    if (!enableStream) {
+                        resolve(response);
+                    }
                 },
                 fail(err) {
+                    response._onFail(err);
                     reject(err);
                 },
                 complete() {
@@ -58,6 +65,11 @@ class VendorHttpEngine extends HttpEngine {
                 if (option.signal.aborted) {
                     task.abort();
                 }
+            }
+            if (enableStream) {
+                task.onHeadersReceived(response._onHeadersReceived.bind(response));
+                task.onChunkReceived(response._onChunkReceived.bind(response));
+                resolve(response);
             }
         });
     }
