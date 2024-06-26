@@ -1,4 +1,4 @@
-<view>
+<view class="page">
     <view class="action-vew" bind:tap="onTap" data-method="GET">GET</view>
     <view class="action-vew" bind:tap="onTap" data-method="GET WITH PARAMS">GET WITH PARAMS</view>
     <view class="action-vew" bind:tap="onTap" data-method="POST">POST</view>
@@ -11,4 +11,6 @@
     <view class="action-vew" bind:tap="onTap" data-method="CONNECT">CONNECT</view>
     <view class="action-vew" bind:tap="onTapTimeout">timeout</view>
     <view class="action-vew" bind:tap="onTapAbort">abort</view>
+    <view class="action-vew" bind:tap="onTapStream">Stream</view>
+    <view class="action-vew" bind:tap="onTapStreamTimeout">Stream Timeout</view>
 </view>

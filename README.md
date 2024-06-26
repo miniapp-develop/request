@@ -121,6 +121,11 @@ Page({
 
 ## ChangeLogs
 
+### 0.2.0
+
+1. ing...
+
 ### 0.1.0
+
 1. 拆分 VendorHttpEngine；
 2. 补全 tests；

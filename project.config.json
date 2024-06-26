@@ -44,9 +44,9 @@
   },
   "miniprogramRoot": "sample/",
   "compileType": "miniprogram",
-  "libVersion": "2.12.3",
+  "libVersion": "2.20.3",
   "appid": "wx9029e39ac1befc18",
-  "projectname": "miniapp-request",
+  "projectname": "mini-dev/request",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

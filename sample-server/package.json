@@ -1,0 +1,19 @@
+{
+    "name": "sample-server",
+    "version": "0.2.0",
+    "main": "app.js",
+    "scripts": {
+        "dev": "node ./app.js",
+        "dev22": "node --watch ./app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "express": "^4.19.2"
+    },
+    "devDependencies": {
+        "axios": "^1.7.2"
+    }
+}
