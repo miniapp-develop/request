@@ -1,10 +1,10 @@
 {
     "name": "sample-server",
     "version": "0.2.0",
-    "main": "app.js",
+    "main": "server.js",
     "scripts": {
-        "dev": "node ./app.js",
-        "dev22": "node --watch ./app.js"
+        "dev": "node server.js",
+        "dev22": "node --watch server.js"
     },
     "keywords": [],
     "author": "",
