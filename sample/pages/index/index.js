@@ -1,20 +1,21 @@
 const { request, AbortController } = require('@mini-dev/request');
+import * as streams from './streams';
 
 request
     .addRequestInterceptor((req) => {
         return new Promise((resolve) => {
-            console.log('this is request interceptor A');
+            console.log('[request] interceptor A');
             setTimeout(function() {
                 resolve(req);
             }, 500);
         });
     })
     .addRequestInterceptor((req) => {
-        console.log('this is request interceptor B');
+        console.log('[request] interceptor B');
         return req;
     })
     .addResponseInterceptor((res) => {
-        console.log('this is response interceptor A');
+        console.log('[response] interceptor A');
         return new Promise((resolve) => {
             setTimeout(function() {
                 resolve(res);
@@ -22,7 +23,7 @@ request
         });
     })
     .addResponseInterceptor((res) => {
-        console.log('this is response interceptor B');
+        console.log('[response] interceptor B');
         return res;
     });
 
@@ -202,42 +203,9 @@ Page({
         controller.abort();
     },
     onTapStream(e) {
-        wx.request({
-            url: 'http://127.0.0.1:3000/stream',
-            timeout: 3000,
-            enableChunked: true,
-            header: {}
-        }).then((res) => {
-            console.log('onTapStream:res=', res);
-            res.data.on('data', (chunk) => {
-                console.log('onTapStream:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
-            });
-            res.data.on('end', () => {
-                console.log('onTapStream:end');
-            });
-        }).catch((err) => {
-            console.error('onTapStream:err=', err);
-        });
+        streams.requestStream(request);
     },
     onTapStreamTimeout(e) {
-        request({
-            url: 'http://127.0.0.1:3000/stream-timeout',
-            timeout: 3000,
-            enableChunked: true,
-            header: {}
-        }).then((res) => {
-            console.log('onTapStreamTimeout:res=', res);
-            res.data.on('data', (chunk) => {
-                console.log('onTapStreamTimeout:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
-            });
-            res.data.on('end', () => {
-                console.log('onTapStreamTimeout:end');
-            });
-            res.data.on('error', (err) => {
-                console.error('onTapStreamTimeout:error', err);
-            });
-        }).catch((err) => {
-            console.error('onTapStreamTimeout:err=', err);
-        });
+        streams.requestStreamTimeout(request);
     }
 });
