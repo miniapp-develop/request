@@ -1,4 +1,4 @@
-const EmptyHttpEngine = require('../libs/EmptyHttpEngine');
+const EmptyHttpEngine = require('./EmptyHttpEngine');
 
 describe('HttpEngine', () => {
     beforeEach(() => {

@@ -1,4 +1,4 @@
-const HttpEngine = require('./HttpEngine');
+const HttpEngine = require('../libs/HttpEngine');
 
 class EmptyHttpEngine extends HttpEngine {
     constructor() {
