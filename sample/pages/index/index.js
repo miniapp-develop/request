@@ -26,13 +26,15 @@ request
         return res;
     });
 
+request.mount();
+
 Page({
     onLoad(query) {
     },
     onTap(e) {
         const method = e.currentTarget.dataset.method;
         if (method === 'GET') {
-            request({
+            wx.request({
                 url: 'https://httpbin.org/get?urlname=urlget',
                 data: {
                     name: 'get name'
@@ -200,7 +202,7 @@ Page({
         controller.abort();
     },
     onTapStream(e) {
-        request({
+        wx.request({
             url: 'http://127.0.0.1:3000/stream',
             timeout: 3000,
             enableChunked: true,

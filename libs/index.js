@@ -49,6 +49,13 @@ function create(engine = _DefaultHttpEngine) {
                 return _async(this.responseInterceptors, res);
             });
     };
+    _request.mount = function(host, name = 'request') {
+        if (host) {
+            Object.defineProperty(host, name, { value: _request });
+        } else if (typeof wx === 'object') {
+            Object.defineProperty(wx, name, { value: _request });
+        }
+    };
 
     return _request;
 }

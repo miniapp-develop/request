@@ -16,7 +16,7 @@ const qs = {
 class VendorHttpEngine extends HttpEngine {
     constructor(proxy, preset = {}) {
         super(preset);
-        this._proxy = proxy;
+        this._proxyRequest = proxy.request.bind(proxy);
     }
 
     _handleRequest(option) {
@@ -45,7 +45,7 @@ class VendorHttpEngine extends HttpEngine {
         return new Promise((resolve, reject) => {
             const enableStream = !!option.enableChunked;
             const response = new Response(enableStream);
-            const task = this._proxy.request({
+            const task = this._proxyRequest({
                 ...option,
                 success(res) {
                     response._onSuccess(res);
