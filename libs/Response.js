@@ -1,4 +1,4 @@
-class ResponseStream {
+class LiteStream {
 
     constructor() {
         this._events = {};
@@ -35,16 +35,12 @@ class ResponseStream {
 
 class Response {
     constructor(enableStream = false, res) {
-        this._headers = {};
-        if (enableStream) {
-            this._stream = new ResponseStream();
+        this._enableStream = enableStream;
+        if (this._enableStream) {
+            this._data = new LiteStream();
         } else {
             this._data = '';
         }
-    }
-
-    get stream() {
-        return this._stream;
     }
 
     _onHeadersReceived(data) {
@@ -54,12 +50,12 @@ class Response {
     }
 
     _onChunkReceived(chunk) {
-        this._stream.write(chunk.data);
+        this._data.write(chunk.data);
     }
 
     _onSuccess(res) {
-        if (this._stream) {
-            this._stream.end();
+        if (this._enableStream) {
+            this._data.end();
         } else {
             this._onHeadersReceived(res);
             this._data = res.data;
@@ -67,7 +63,9 @@ class Response {
     }
 
     _onFail(err) {
-        this._stream.error(err);
+        if (this._enableStream) {
+            this._data.error(err);
+        }
     }
 
     get headers() {
@@ -87,11 +85,7 @@ class Response {
     }
 
     get data() {
-        if (this._stream) {
-            return this._stream;
-        } else {
-            return this._data;
-        }
+        return this._data;
     }
 }
 

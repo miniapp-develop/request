@@ -231,6 +231,9 @@ Page({
             res.data.on('end', () => {
                 console.log('onTapStreamTimeout:end');
             });
+            res.data.on('error', (err) => {
+                console.error('onTapStreamTimeout:error', err);
+            });
         }).catch((err) => {
             console.error('onTapStreamTimeout:err=', err);
         });
