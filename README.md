@@ -1,6 +1,6 @@
 # miniapp request
 
-一个简单的小程序 request 封装，在原有的小程序 request 上增加了以下支持：
+一个简单的小程序 request 封装，在不改变原有的小程序 request 的基础上，增加了以下支持：
 
 1. 自定义拦截器（RequestInterceptor、ResponseInterceptor）；
 2. 支持 Promise；
@@ -25,7 +25,7 @@ const { request } = require('@mini-dev/request');
 request({ ... });
 ```
 
-上述方式引用的是默认 request 对象，如果不同的业务需要不同的request，可以自行创建：
+上述方式引用的是默认 request 对象，如果不同的业务需要不同的 request，可以自行创建：
 
 ```javascript
 const { request } = require('@mini-dev/request');
@@ -64,6 +64,30 @@ request({
 
 其他参数会原样传入。
 
+### 取消请求
+
+由于改成了 Promise 返回，因此无法直接访问到原始的 [RequestTask](https://developers.weixin.qq.com/miniprogram/dev/api/network/request/RequestTask.html) 对象，因此提供了其他的方式：
+
+```javascript
+const { request } = require('@mini-dev/request');
+
+const controller = new AbortController();
+request({
+    url: 'https://httpbin.org/delay/8',
+    signal: controller.signal
+})
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+setTimeout(() => {
+    controller.abort();
+}, 1000); // 1 秒后取消请求
+```
+
 ### 替换微信的 request
 
 有时候为了方便，我们可能需要替换微信的 request，此时可以使用 mount 方法，将 wx.request 替换为自定义的 request：
@@ -97,49 +121,57 @@ wx.biubiubiu_request({ ... });
 const { request } = require('@mini-dev/request');
 
 // 添加 请求 拦截器
-request.addRequestInterceptor(req => {
-    return new Promise(resolve => {
-        console.log('this is request interceptor A');
-        setTimeout(function() {
-            resolve(req);
-        }, 1000);
+request
+    .addRequestInterceptor((req) => {
+        return new Promise((resolve) => {
+            console.log('this is request interceptor A');
+            setTimeout(function () {
+                resolve(req);
+            }, 1000);
+        });
     })
-}).addRequestInterceptor(req => {
-    console.log('this is request interceptor B');
-    return req;
-});
+    .addRequestInterceptor((req) => {
+        console.log('this is request interceptor B');
+        return req;
+    });
 
 // 添加 响应 拦截器
-request.addResponseInterceptor(res => {
-    console.log('this is response interceptor A');
-    return new Promise(resolve => {
-        setTimeout(function() {
-            resolve(res);
-        }, 1000);
+request
+    .addResponseInterceptor((res) => {
+        console.log('this is response interceptor A');
+        return new Promise((resolve) => {
+            setTimeout(function () {
+                resolve(res);
+            }, 1000);
+        });
     })
-}).addResponseInterceptor(res => {
-    console.log('this is response interceptor B');
-    return res;
-})
-
+    .addResponseInterceptor((res) => {
+        console.log('this is response interceptor B');
+        return res;
+    });
 ```
+
+#### 拦截器的执行顺序
 
 对于 request 拦截器，先添加的拦截器都会**后**执行
 对于 response 拦截器，先添加的拦截器都会**先**执行。
 或者类比**洋葱模型**，因此，上述拦截器的调用顺序为：
 
-    -> 1. request interceptor B 
-    -> 2. request interceptor A 
+    -> 1. request interceptor B
+    -> 2. request interceptor A
     -> 3. {http request}
-    -> 4. response interceptor A 
+    -> 4. response interceptor A
     -> 5. response interceptor B
+
+#### 拦截器的参数
+
+请求拦截器的参数就是发送给 request 的参数，响应拦截器的参数就是 request 返回的 res 对象，两者并未做任何封装。
 
 ### 页面调用
 
 ```javascript
 Page({
-    onLoad(query) {
-    },
+    onLoad(query) {},
     onTapGet(e) {
         const controller = new AbortController();
         request({
@@ -147,19 +179,21 @@ Page({
             method: 'get', //默认使用 get
             params: {},
             signal: controller.signal
-        }).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.error(err);
-        });
+        })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         controller.abort();
     }
-})
+});
 ```
 
 ## 示例
 
-参见 [sample小程序](./sample)，[sample小程序 对应的测试服务器](./sample-server)
+参见 [sample 小程序](./sample)，[sample 小程序 对应的测试服务器](./sample-server)
 
 ## ChangeLogs
 
