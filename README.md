@@ -3,9 +3,10 @@
 一个简单的小程序 request 封装，在原有的小程序 request 上增加了以下支持：
 
 1. 自定义拦截器（RequestInterceptor、ResponseInterceptor）；
-2. Promise；
-3. 取消请求；
+2. 支持 Promise；
+3. 支持取消请求；
 4. 更常用的接口字段命名；
+5. 支持流式传输；
 
 ## 使用方法
 
@@ -15,25 +16,31 @@
 npm i @mini-dev/request
 ```
 
-### 创建 request 对象。
+引入 request：
 
 ```javascript
-const {request} = require('@mini-dev/request');
-request({...});
+const { request } = require('@mini-dev/request');
+
+// 发起请求，参数与 wx.reqeust 一致，但是返回 Promise
+request({ ... });
 ```
 
-上述方式引用的是默认 request 对象，如果需要多个不同的request，可以自行创建：
+上述方式引用的是默认 request 对象，如果不同的业务需要不同的request，可以自行创建：
 
 ```javascript
-const {request} = require('@mini-dev/request');
-const anotherRequest = request.create();
-anotherRequest({...});
+const { request } = require('@mini-dev/request');
+
+const anotherRequest1 = request.create();
+anotherRequest1({ ... });
+
+const anotherRequest2 = request.create();
+anotherRequest2({ ... });
 ```
 
 ### 发起请求
 
 ```javascript
-const {request} = require('@mini-dev/request');
+const { request } = require('@mini-dev/request');
 request({
     url: 'https://xxxxxxx',
     method: 'post',
@@ -43,7 +50,7 @@ request({
     data: {
         name: 'xesam'
     },
-    headers: {
+    headers: { // 这里也可以使用小程序文档的 header 字段
         auth: 'xxx'
     }
 }).then(...).catch(...);
@@ -53,29 +60,60 @@ request({
 
     method：如果没有设置，就使用 GET
     params：添加到 url 上的参数
-    headers：请求头字段
+    headers：请求头字段，如果有设置小程序默认的 header ，则 header 字段会覆盖 headers
 
 其他参数会原样传入。
+
+### 替换微信的 request
+
+有时候为了方便，我们可能需要替换微信的 request，此时可以使用 mount 方法，将 wx.request 替换为自定义的 request：
+
+```javascript
+const { request } = require('@mini-dev/request');
+
+// 替换微信的 request
+request.mount(wx);
+
+// 发起请求，参数与 wx.request 一致，但是返回 Promise
+wx.request({ ... });
+```
+
+不过，不太建议轻易替换原生框架的方法，因为小程序的框架是经过严格测试的，如果替换了，可能会导致一些问题。所以，可以考虑在 wx
+全局对象上添加自定义对象：
+
+```javascript
+const { request } = require('@mini-dev/request');
+
+// 替换微信的 request
+request.mount(wx, 'biubiubiu_request');
+
+// 发起请求，参数与 wx.request 一致，但是返回 Promise
+wx.biubiubiu_request({ ... });
+```
 
 ### 添加拦截器
 
 ```javascript
-const {request} = require('@mini-dev/request');
+const { request } = require('@mini-dev/request');
 
+// 添加 请求 拦截器
 request.addRequestInterceptor(req => {
     return new Promise(resolve => {
         console.log('this is request interceptor A');
-        setTimeout(function () {
+        setTimeout(function() {
             resolve(req);
         }, 1000);
     })
 }).addRequestInterceptor(req => {
     console.log('this is request interceptor B');
     return req;
-}).addResponseInterceptor(res => {
+});
+
+// 添加 响应 拦截器
+request.addResponseInterceptor(res => {
     console.log('this is response interceptor A');
     return new Promise(resolve => {
-        setTimeout(function () {
+        setTimeout(function() {
             resolve(res);
         }, 1000);
     })
@@ -88,13 +126,13 @@ request.addRequestInterceptor(req => {
 
 对于 request 拦截器，先添加的拦截器都会**后**执行
 对于 response 拦截器，先添加的拦截器都会**先**执行。
-因此，上述拦截器的调用顺序为：
+或者类比**洋葱模型**，因此，上述拦截器的调用顺序为：
 
-    request interceptor B 
-    -> request interceptor A 
-    -> {http request}
-    -> response interceptor A 
-    -> response interceptor B
+    -> 1. request interceptor B 
+    -> 2. request interceptor A 
+    -> 3. {http request}
+    -> 4. response interceptor A 
+    -> 5. response interceptor B
 
 ### 页面调用
 
@@ -119,11 +157,16 @@ Page({
 })
 ```
 
+## 示例
+
+参见 [sample小程序](./sample)，[sample小程序 对应的测试服务器](./sample-server)
+
 ## ChangeLogs
 
 ### 0.2.0
 
-1. ing...
+1. 增加 Stream 支持；
+2. 增加 mount；
 
 ### 0.1.0
 
