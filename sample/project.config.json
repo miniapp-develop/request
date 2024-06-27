@@ -42,7 +42,6 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },
-  "miniprogramRoot": "sample/",
   "compileType": "miniprogram",
   "libVersion": "2.20.3",
   "appid": "wx9029e39ac1befc18",
@@ -51,6 +50,5 @@
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  },
-  "srcMiniprogramRoot": "sample/"
+  }
 }
