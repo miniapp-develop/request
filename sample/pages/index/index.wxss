@@ -1,12 +1,4 @@
-.page{
-    padding: 0.5em 0;
-}
-
-.action-vew {
-    text-align: center;
+.route-view {
     padding: 0.8em;
-    color: white;
-    background: #07c160;
-    margin: 0.5em;
-    border-radius: 0.2em;
+    background: white;
 }

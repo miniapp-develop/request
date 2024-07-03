@@ -1,16 +1,5 @@
 <view class="page">
-    <view class="action-vew" bind:tap="onTap" data-method="GET">GET</view>
-    <view class="action-vew" bind:tap="onTap" data-method="GET WITH PARAMS">GET WITH PARAMS</view>
-    <view class="action-vew" bind:tap="onTap" data-method="POST">POST</view>
-    <view class="action-vew" bind:tap="onTap" data-method="PUT">PUT</view>
-    <view class="action-vew" bind:tap="onTap" data-method="PATCH">PATCH</view>
-    <view class="action-vew" bind:tap="onTap" data-method="DELETE">DELETE</view>
-    <view class="action-vew" bind:tap="onTap" data-method="OPTIONS">OPTIONS</view>
-    <view class="action-vew" bind:tap="onTap" data-method="HEAD">HEAD</view>
-    <view class="action-vew" bind:tap="onTap" data-method="TRACE">TRACE</view>
-    <view class="action-vew" bind:tap="onTap" data-method="CONNECT">CONNECT</view>
-    <view class="action-vew" bind:tap="onTapTimeout">timeout</view>
-    <view class="action-vew" bind:tap="onTapAbort">abort</view>
-    <view class="action-vew" bind:tap="onTapStream">Stream</view>
-    <view class="action-vew" bind:tap="onTapStreamTimeout">Stream Timeout</view>
+    <view class="route-view" bind:tap="onTap" data-method="Methods">HTTP Methods</view>
+    <view class="route-view" bind:tap="onTap" data-method="Exception">HTTP Control</view>
+    <view class="route-view" bind:tap="onTap" data-method="Stream">HTTP Stream</view>
 </view>

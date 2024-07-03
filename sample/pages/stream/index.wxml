@@ -1,0 +1,4 @@
+<view class="page">
+    <view class="action-vew" bind:tap="onTapStream">Stream Messages</view>
+    <view class="action-vew" bind:tap="onTapStreamTimeout">Stream Timeout</view>
+</view>
