@@ -1,4 +1,5 @@
-const { request, AbortController } = require('../../app.request');
+const { AbortController } = require('@mini-dev/request');
+import request from '../../app.request';
 
 Page({
     onLoad(query) {
@@ -26,6 +27,8 @@ Page({
         }).catch((err) => {
             console.error(err);
         });
-        controller.abort();
+        setTimeout(() => {
+            controller.abort();
+        }, 2000);
     }
 });

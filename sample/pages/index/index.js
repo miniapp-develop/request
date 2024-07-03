@@ -1,17 +1,21 @@
 Page({
     onTap(e) {
         const method = e.currentTarget.dataset.method;
-        if (method === 'Methods') {
+        if (method === 'methods') {
             wx.navigateTo({
                 url: '/pages/methods/index'
             });
-        } else if (method === 'Exception') {
+        } else if (method === 'control') {
             wx.navigateTo({
-                url: '/pages/exception/index'
+                url: '/pages/control/index'
             });
-        } else if (method === 'Stream') {
+        } else if (method === 'stream') {
             wx.navigateTo({
                 url: '/pages/stream/index'
+            });
+        } else if (method === 'custom') {
+            wx.navigateTo({
+                url: '/pages/custom/index'
             });
         }
     }

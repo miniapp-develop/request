@@ -1,4 +1,4 @@
-const { request } = require('../../app.request');
+const request = require('../../app.request');
 import * as streams from './streams';
 
 Page({

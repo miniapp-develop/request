@@ -1,4 +1,4 @@
-const { request, AbortController } = require('../../app.request');
+import request from '../../app.request';
 
 Page({
     onLoad(query) {

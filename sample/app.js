@@ -4,6 +4,6 @@ request.mount();
 
 App({
     onLaunch(options) {
-
+        request.mount(this);
     }
 });

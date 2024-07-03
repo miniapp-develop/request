@@ -199,8 +199,8 @@ Page({
 
 ### 0.2.0
 
-1. 增加 Stream 支持；
-2. 增加 mount；
+1. 增加 Stream 传输支持；
+2. 增加 mount，方便挂载到app上，或者直接替换 wx 的原始 request；
 
 ### 0.1.0
 

@@ -2,8 +2,9 @@
     "pages": [
         "pages/index/index",
         "pages/methods/index",
-        "pages/exception/index",
-        "pages/stream/index"
+        "pages/control/index",
+        "pages/stream/index",
+        "pages/custom/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

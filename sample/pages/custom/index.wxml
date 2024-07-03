@@ -1,0 +1,3 @@
+<view class="page">
+    <view class="action-vew" bind:tap="onTap">pageRequest()</view>
+</view>

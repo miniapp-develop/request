@@ -1,4 +1,4 @@
-const { request, AbortController } = require('@mini-dev/request');
+const { request } = require('@mini-dev/request');
 
 request
     .addRequestInterceptor((req) => {
