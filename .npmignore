@@ -8,4 +8,5 @@ sitemap.json
 .idea
 *.iml
 .npmrc
-project.private.config.json
+__tests__
+.prettierrc.json
