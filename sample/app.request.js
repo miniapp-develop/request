@@ -13,16 +13,16 @@ request
         console.log('[request] interceptor B', req);
         return req;
     })
-    .addResponseInterceptor((res) => {
-        console.log('[response] interceptor A', res);
+    .addResponseInterceptor((res, req) => {
+        console.log('[response] interceptor A', res, req);
         return new Promise((resolve) => {
             setTimeout(function() {
                 resolve(res);
             }, 500);
         });
     })
-    .addResponseInterceptor((res) => {
-        console.log('[response] interceptor B', res);
+    .addResponseInterceptor((res, req) => {
+        console.log('[response] interceptor B', res, req);
         return res;
     });
 
