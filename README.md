@@ -66,7 +66,9 @@ request({
 
 ### 取消请求
 
-由于改成了 Promise 返回，因此无法直接访问到原始的 [RequestTask](https://developers.weixin.qq.com/miniprogram/dev/api/network/request/RequestTask.html) 对象，因此提供了其他的方式：
+由于改成了 Promise
+返回，因此无法直接访问到原始的 [RequestTask](https://developers.weixin.qq.com/miniprogram/dev/api/network/request/RequestTask.html)
+对象，因此提供了其他的方式：
 
 ```javascript
 const { request } = require('@mini-dev/request');
@@ -125,7 +127,7 @@ request
     .addRequestInterceptor((req) => {
         return new Promise((resolve) => {
             console.log('this is request interceptor A');
-            setTimeout(function () {
+            setTimeout(function() {
                 resolve(req);
             }, 1000);
         });
@@ -140,7 +142,7 @@ request
     .addResponseInterceptor((res) => {
         console.log('this is response interceptor A');
         return new Promise((resolve) => {
-            setTimeout(function () {
+            setTimeout(function() {
                 resolve(res);
             }, 1000);
         });
@@ -171,7 +173,8 @@ request
 
 ```javascript
 Page({
-    onLoad(query) {},
+    onLoad(query) {
+    },
     onTapGet(e) {
         const controller = new AbortController();
         request({
@@ -196,6 +199,11 @@ Page({
 参见 [sample 小程序](./sample)，[sample 小程序 对应的测试服务器](./sample-server)
 
 ## ChangeLogs
+
+### 0.3s.0
+
+1. Stream resolve 时机修正；
+2. response interceptor 增加 req 入参；
 
 ### 0.2.0
 
