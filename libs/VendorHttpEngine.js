@@ -67,9 +67,11 @@ class VendorHttpEngine extends HttpEngine {
                 }
             }
             if (enableStream) {
-                task.onHeadersReceived(response._onHeadersReceived.bind(response));
+                task.onHeadersReceived(headerData => {
+                    response._onHeadersReceived(headerData);
+                    resolve(response);
+                });
                 task.onChunkReceived(response._onChunkReceived.bind(response));
-                resolve(response);
             }
         });
     }
