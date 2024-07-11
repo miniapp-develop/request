@@ -1,17 +1,17 @@
 const VendorHttpEngine = require('./VendorHttpEngine');
 
-function _async(interceptors, data) {
+function _async(interceptors, data, ...args) {
     let index = 0;
     const next = function(res) {
         const nextInterceptor = interceptors[index++];
         if (!nextInterceptor) {
             return Promise.resolve(res);
         }
-        const ret = nextInterceptor.call(nextInterceptor, res);
-        if (ret && ret.then) {
-            return ret.then(next);
+        const result = nextInterceptor.call(nextInterceptor, res, ...args);
+        if (result && result.then) {
+            return result.then(next);
         } else {
-            return next(ret);
+            return next(result);
         }
     };
     return next(data);
@@ -46,7 +46,7 @@ function create(engine = _DefaultHttpEngine) {
         return _async(this.requestInterceptors, req)
             .then(this.engine.request.bind(this.engine))
             .then(res => {
-                return _async(this.responseInterceptors, res);
+                return _async(this.responseInterceptors, res, req);
             });
     };
     _request.mount = function(host, name = 'request') {
