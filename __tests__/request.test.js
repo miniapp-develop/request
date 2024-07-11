@@ -9,7 +9,10 @@ describe('default exported', () => {
         expect(request.handle).toThrow('No engine found');
     });
     test('when wx is not null then httpEngine is VendorHttpEngine', () => {
-        global.wx = {};
+        global.wx = {
+            request() {
+            }
+        };
         const request = require('../libs').request;
 
         expect(request.engine).toBeInstanceOf(require('../libs/VendorHttpEngine'));
@@ -27,7 +30,10 @@ describe('create', () => {
         expect(request.handle).toThrow('No engine found');
     });
     test('when create with default and wx is not null then httpEngine is VendorHttpEngine', () => {
-        global.wx = {};
+        global.wx = {
+            request() {
+            }
+        };
         const request = require('../libs').request.create();
 
         expect(request.engine).toBeInstanceOf(require('../libs/VendorHttpEngine'));
