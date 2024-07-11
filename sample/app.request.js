@@ -3,18 +3,18 @@ const { request } = require('@mini-dev/request');
 request
     .addRequestInterceptor((req) => {
         return new Promise((resolve) => {
-            console.log('[request] interceptor A');
+            console.log('[request] interceptor A', req);
             setTimeout(function() {
                 resolve(req);
             }, 500);
         });
     })
     .addRequestInterceptor((req) => {
-        console.log('[request] interceptor B');
+        console.log('[request] interceptor B', req);
         return req;
     })
     .addResponseInterceptor((res) => {
-        console.log('[response] interceptor A');
+        console.log('[response] interceptor A', res);
         return new Promise((resolve) => {
             setTimeout(function() {
                 resolve(res);
@@ -22,7 +22,7 @@ request
         });
     })
     .addResponseInterceptor((res) => {
-        console.log('[response] interceptor B');
+        console.log('[response] interceptor B', res);
         return res;
     });
 
