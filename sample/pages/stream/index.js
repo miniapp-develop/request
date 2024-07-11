@@ -1,13 +1,13 @@
-const request = require('../../app.request');
-import * as streams from './streams';
+import request from '../../app.request';
+import { requestStream, requestStreamTimeout } from './streams';
 
 Page({
     onLoad(query) {
     },
     onTapStream(e) {
-        streams.requestStream(request);
+        requestStream(request);
     },
     onTapStreamTimeout(e) {
-        streams.requestStreamTimeout(request);
+        requestStreamTimeout(request);
     }
 });
