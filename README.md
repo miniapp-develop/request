@@ -200,7 +200,9 @@ Page({
 
 ## ChangeLogs
 
-### 0.3s.0
+### 0.3.1
+
+### 0.3.0
 
 1. Stream resolve 时机修正；
 2. response interceptor 增加 req 入参；

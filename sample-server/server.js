@@ -7,7 +7,11 @@ server.get('/', (req, res) => {
 
 const messages = ['Hello', 'Are ', 'you Ok?'];
 
-server.get('/stream', (req, res) => {
+server.get('/plain/', (req, res) => {
+    res.end('data: Hello\n\ndata: Are\n\ndata: you Ok?\n\ndata: Finished\n\n');
+});
+
+server.get('/stream-with-header', (req, res) => {
     console.log('/stream');
     res.setHeader('Content-Type', 'text/event-stream;charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
@@ -23,6 +27,22 @@ server.get('/stream', (req, res) => {
         count++;
     }, 1000);
 });
+server.get('/stream-without-header', (req, res) => {
+    console.log('/stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    let count = 0;
+    const timer = setInterval(() => {
+        if (count === messages.length) {
+            clearInterval(timer);
+            res.end('data: Finished\n\n');
+        } else {
+            res.write(`data: ${messages[count]}\n\n`);
+        }
+        count++;
+    }, 1000);
+});
+
 
 server.get('/stream-timeout', (req, res) => {
 });

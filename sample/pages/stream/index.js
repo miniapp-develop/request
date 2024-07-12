@@ -1,13 +1,19 @@
 import request from '../../app.request';
-import { requestStream, requestStreamTimeout } from './streams';
+import * as streams from './streams';
 
 Page({
     onLoad(query) {
     },
-    onTapStream(e) {
-        requestStream(request);
+    onTapStreamWithHeader(e) {
+        streams.streamWithHeader(request);
+    },
+    onTapStreamWithoutHeader(e) {
+        streams.streamWithoutHeader(request);
     },
     onTapStreamTimeout(e) {
-        requestStreamTimeout(request);
+        streams.streamTimeout(request);
+    },
+    onTapPlainText(e) {
+        streams.requestPlainText(request);
     }
 });
