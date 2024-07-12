@@ -2,6 +2,7 @@ class LiteStream {
 
     constructor() {
         this._events = {};
+        this._finished = false;
     }
 
     on(event, callback) {
@@ -21,15 +22,19 @@ class LiteStream {
     }
 
     write(chunk) {
-        this.emit('data', chunk);
+        if (!this._finished) {
+            this.emit('data', chunk);
+        }
     }
 
     end() {
         this.emit('end');
+        this._finished = true;
     }
 
     error(err) {
         this.emit('error', err);
+        this._finished = true;
     }
 }
 
@@ -57,7 +62,6 @@ class Response {
         if (this._enableStream) {
             this._data.end();
         } else {
-            this._onHeadersReceived(res);
             this._data = res.data;
         }
     }
@@ -68,11 +72,15 @@ class Response {
         }
     }
 
+    get enableChunked() {
+        return this._enableStream;
+    }
+
     get headers() {
         return this._headers;
     }
 
-    get header() {
+    get header() { //兼容小程序的命名方式
         return this.headers;
     }
 

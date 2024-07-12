@@ -194,6 +194,14 @@ Page({
 });
 ```
 
+### chunked 传输说明
+
+开启 chunked 传输需要添加请求参数：`enableChunked: true`，在这种情况下，wx.request 的 success 回调会等到传输完毕之后再调用。
+如果你期望 chunked 传输，但是服务器的返回结果并不是 chunked 传输，那么就只能正常获取到
+headers，而无法获取到的实际的响应体，所以需要注意服务器的返回方式。
+
+以 express 为例，用 write + end 进行响应返回。
+
 ## 示例
 
 参见 [sample 小程序](./sample)，[sample 小程序 对应的测试服务器](./sample-server)
@@ -201,6 +209,8 @@ Page({
 ## ChangeLogs
 
 ### 0.3.1
+
+1. res 增加 chunked 标志；
 
 ### 0.3.0
 

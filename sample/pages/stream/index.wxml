@@ -2,5 +2,6 @@
     <view class="action-vew" bind:tap="onTapStreamWithHeader">Stream with Header</view>
     <view class="action-vew" bind:tap="onTapStreamWithoutHeader">Stream without Header</view>
     <view class="action-vew" bind:tap="onTapStreamTimeout">Stream Timeout</view>
-    <view class="action-vew" bind:tap="onTapPlainText">Plain Text</view>
+    <view class="action-vew" bind:tap="onTapPlainTextWithHeader">Plain Text with header</view>
+    <view class="action-vew" bind:tap="onTapPlainTextWithoutHeader">Plain Text without header</view>
 </view>

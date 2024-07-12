@@ -43,21 +43,19 @@ class VendorHttpEngine extends HttpEngine {
             }
         }
         return new Promise((resolve, reject) => {
-            const enableStream = !!option.enableChunked;
-            const response = new Response(enableStream);
+            const enableChunked = !!option.enableChunked;
+            const response = new Response(enableChunked);
             const task = this._proxyRequest({
                 ...option,
                 success(res) {
                     response._onSuccess(res);
-                    if (!enableStream) {
+                    if (!response.enableChunked) {
                         resolve(response);
                     }
                 },
                 fail(err) {
                     response._onFail(err);
                     reject(err);
-                },
-                complete() {
                 }
             });
             if (option.signal) {
@@ -66,13 +64,13 @@ class VendorHttpEngine extends HttpEngine {
                     task.abort();
                 }
             }
-            if (enableStream) {
-                task.onHeadersReceived(headerData => {
-                    response._onHeadersReceived(headerData);
+            task.onHeadersReceived(headerData => {
+                response._onHeadersReceived(headerData);
+                if (response.enableChunked) {
                     resolve(response);
-                });
-                task.onChunkReceived(response._onChunkReceived.bind(response));
-            }
+                }
+            });
+            task.onChunkReceived(response._onChunkReceived.bind(response));
         });
     }
 }

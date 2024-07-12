@@ -7,7 +7,12 @@ server.get('/', (req, res) => {
 
 const messages = ['Hello', 'Are ', 'you Ok?'];
 
-server.get('/plain/', (req, res) => {
+server.get('/plain-with-header', (req, res) => {
+    res.setHeader('Transfer-Encoding', 'chunked');
+    res.end('data: Hello\n\ndata: Are\n\ndata: you Ok?\n\ndata: Finished\n\n');
+});
+
+server.get('/plain-without-header', (req, res) => {
     res.end('data: Hello\n\ndata: Are\n\ndata: you Ok?\n\ndata: Finished\n\n');
 });
 
