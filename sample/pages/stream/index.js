@@ -17,6 +17,6 @@ Page({
         streams.plainTextWithoutHeader();
     },
     onTapStreamWithHeaderNoBuffer(e) {
-        streams.plainTextWithoutHeaderNoBuffer();
+        streams.streamWithHeaderNoBuffer();
     }
 });

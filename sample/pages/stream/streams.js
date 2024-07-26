@@ -11,7 +11,7 @@ const streamRequest = request
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(res);
-            }, 1500);
+            }, 1000);
         });
     });
 
@@ -79,12 +79,12 @@ export function plainTextWithoutHeader() {
     });
 }
 
-export function plainTextWithoutHeaderNoBuffer() {
+export function streamWithHeaderNoBuffer() {
     runRequest({
         url: 'http://127.0.0.1:3000/stream-with-header',
         timeout: 20000,
         enableChunked: true,
-        ChunkedBuffer: false,
+        enableChunkedBuffer: false,
         header: {}
     });
 }
