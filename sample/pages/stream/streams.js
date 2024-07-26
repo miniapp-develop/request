@@ -1,3 +1,4 @@
+const { AbortController } = require('@mini-dev/request');
 import request from '../../app.request';
 
 const streamRequest = request
@@ -74,6 +75,21 @@ export function plainTextWithoutHeader() {
     runRequest({
         url: 'http://127.0.0.1:3000/plain-without-header',
         timeout: 3000,
+        enableChunked: true,
+        header: {}
+    });
+}
+
+export function streamThenAbort() {
+    const controller = new AbortController();
+    setTimeout(() => {
+        console.log('[Page Streams]:abort');
+        controller.abort();
+    }, 1000);
+    runRequest({
+        url: 'http://127.0.0.1:3000/stream-with-header',
+        timeout: 20000,
+        signal: controller.signal,
         enableChunked: true,
         header: {}
     });

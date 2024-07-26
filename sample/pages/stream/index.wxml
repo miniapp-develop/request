@@ -5,6 +5,7 @@
     <view class="action-vew" bind:tap="onTapStreamTimeout">Stream Timeout</view>
     <view class="action-vew" bind:tap="onTapPlainTextWithHeader">Plain Text with header</view>
     <view class="action-vew" bind:tap="onTapPlainTextWithoutHeader">Plain Text without header</view>
+    <view class="action-vew" bind:tap="onTapStreamThenAbort">Abort after 1s</view>
     <viewe class="s-header">chunk buffer = false</viewe>
     <view class="action-vew" bind:tap="onTapStreamWithHeaderNoBuffer">Stream with Header</view>
 </view>

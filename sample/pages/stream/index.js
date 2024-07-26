@@ -18,5 +18,8 @@ Page({
     },
     onTapStreamWithHeaderNoBuffer(e) {
         streams.streamWithHeaderNoBuffer();
+    },
+    onTapStreamThenAbort(e) {
+        streams.streamThenAbort();
     }
 });
