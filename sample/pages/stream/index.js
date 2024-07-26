@@ -1,27 +1,22 @@
-import request from '../../app.request';
 import * as streams from './streams';
-
-const pageRequest = request.create().addRequestInterceptor(req => {
-    console.log(`[Page Streams] req = `, req);
-    return req;
-});
-
 Page({
-    onLoad(query) {
-    },
+    onLoad(query) {},
     onTapStreamWithHeader(e) {
-        streams.streamWithHeader(pageRequest);
+        streams.streamWithHeader();
     },
     onTapStreamWithoutHeader(e) {
-        streams.streamWithoutHeader(pageRequest);
+        streams.streamWithoutHeader();
     },
     onTapStreamTimeout(e) {
-        streams.streamTimeout(pageRequest);
+        streams.streamTimeout();
     },
     onTapPlainTextWithHeader(e) {
-        streams.plainTextWithHeader(pageRequest);
+        streams.plainTextWithHeader();
     },
     onTapPlainTextWithoutHeader(e) {
-        streams.plainTextWithoutHeader(pageRequest);
+        streams.plainTextWithoutHeader();
+    },
+    onTapStreamWithHeaderNoBuffer(e) {
+        streams.plainTextWithoutHeaderNoBuffer();
     }
 });

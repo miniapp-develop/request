@@ -1,40 +1,41 @@
-function runRequest(request, option) {
-    return request(option).then((res) => {
-        console.log('[Page Streams]:res=', res);
-        res.data.on('data', (chunk) => {
-            console.log('[Page Streams]:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
+import request from '../../app.request';
+
+const streamRequest = request
+    .create()
+    .addRequestInterceptor((req) => {
+        console.log(`[Page Streams] Interceptor req = `, req);
+        return req;
+    })
+    .addResponseInterceptor((res) => {
+        console.log(`[Page Streams] Interceptor res = `, res);
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(res);
+            }, 1500);
         });
-        res.data.on('end', () => {
-            console.log('[Page Streams]:end');
-        });
-        res.data.on('error', err => {
-            console.error('[Page Streams]:error', err);
-        });
-    }).catch((err) => {
-        console.error('[Page Streams]:err=', err);
     });
+
+function runRequest(option) {
+    return streamRequest(option)
+        .then((res) => {
+            console.log('[Page Streams]:res=', res);
+            res.data.on('data', (chunk) => {
+                console.log('[Page Streams]:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
+            });
+            res.data.on('end', () => {
+                console.log('[Page Streams]:end');
+            });
+            res.data.on('error', (err) => {
+                console.error('[Page Streams]:error', err);
+            });
+        })
+        .catch((err) => {
+            console.error('[Page Streams]:err=', err);
+        });
 }
 
-export function plainTextWithHeader(request) {
-    runRequest(request, {
-        url: 'http://127.0.0.1:3000/plain-with-header',
-        timeout: 3000,
-        enableChunked: true,
-        header: {}
-    });
-}
-
-export function plainTextWithoutHeader(request) {
-    runRequest(request, {
-        url: 'http://127.0.0.1:3000/plain-without-header',
-        timeout: 3000,
-        enableChunked: true,
-        header: {}
-    });
-}
-
-export function streamWithHeader(request) {
-    runRequest(request, {
+export function streamWithHeader() {
+    runRequest({
         url: 'http://127.0.0.1:3000/stream-with-header',
         timeout: 20000,
         enableChunked: true,
@@ -42,8 +43,8 @@ export function streamWithHeader(request) {
     });
 }
 
-export function streamWithoutHeader(request) {
-    runRequest(request, {
+export function streamWithoutHeader() {
+    runRequest({
         url: 'http://127.0.0.1:3000/stream-without-header',
         timeout: 20000,
         enableChunked: true,
@@ -51,11 +52,39 @@ export function streamWithoutHeader(request) {
     });
 }
 
-export function streamTimeout(request) {
-    runRequest(request, {
+export function streamTimeout() {
+    runRequest({
         url: 'http://127.0.0.1:3000/stream-timeout',
         timeout: 3000,
         enableChunked: true,
+        header: {}
+    });
+}
+
+export function plainTextWithHeader() {
+    runRequest({
+        url: 'http://127.0.0.1:3000/plain-with-header',
+        timeout: 3000,
+        enableChunked: true,
+        header: {}
+    });
+}
+
+export function plainTextWithoutHeader() {
+    runRequest({
+        url: 'http://127.0.0.1:3000/plain-without-header',
+        timeout: 3000,
+        enableChunked: true,
+        header: {}
+    });
+}
+
+export function plainTextWithoutHeaderNoBuffer() {
+    runRequest({
+        url: 'http://127.0.0.1:3000/stream-with-header',
+        timeout: 20000,
+        enableChunked: true,
+        ChunkedBuffer: false,
         header: {}
     });
 }

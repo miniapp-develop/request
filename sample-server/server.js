@@ -1,5 +1,6 @@
 const express = require('express');
 const server = express();
+const INTERVAL = 500;
 
 server.get('/', (req, res) => {
     res.send('Hello World!');
@@ -30,7 +31,7 @@ server.get('/stream-with-header', (req, res) => {
             res.write(`data: ${messages[count]}\n\n`);
         }
         count++;
-    }, 1000);
+    }, INTERVAL);
 });
 server.get('/stream-without-header', (req, res) => {
     console.log('/stream');
@@ -45,12 +46,10 @@ server.get('/stream-without-header', (req, res) => {
             res.write(`data: ${messages[count]}\n\n`);
         }
         count++;
-    }, 1000);
+    }, INTERVAL);
 });
 
-
-server.get('/stream-timeout', (req, res) => {
-});
+server.get('/stream-timeout', (req, res) => {});
 
 server.get('/stream-hang-up', (req, res) => {
     console.log('/stream-timeout');
@@ -65,7 +64,7 @@ server.get('/stream-hang-up', (req, res) => {
             res.write(`data: ${messages[count]}\n\n`);
         }
         count++;
-    }, 1000);
+    }, INTERVAL);
 });
 
 server.listen(3000, () => {
