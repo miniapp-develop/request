@@ -1,43 +1,4 @@
-class LiteStream {
-
-    constructor() {
-        this._events = {};
-        this._finished = false;
-    }
-
-    on(event, callback) {
-        if (!this._events[event]) {
-            this._events[event] = [];
-        }
-
-        this._events[event].push(callback);
-    }
-
-    emit(event, data) {
-        if (this._events[event]) {
-            this._events[event].forEach(callback => {
-                callback(data);
-            });
-        }
-    }
-
-    write(chunk) {
-        if (!this._finished) {
-            this.emit('data', chunk);
-        }
-    }
-
-    end() {
-        this.emit('end');
-        this._finished = true;
-    }
-
-    error(err) {
-        this.emit('error', err);
-        this._finished = true;
-    }
-}
-
+const LiteStream = require('./ChunkStream');
 class Response {
     constructor(enableStream = false, res) {
         this._enableStream = enableStream;
@@ -80,7 +41,8 @@ class Response {
         return this._headers;
     }
 
-    get header() { //兼容小程序的命名方式
+    get header() {
+        //兼容小程序的命名方式
         return this.headers;
     }
 
