@@ -9,18 +9,20 @@ const qs = {
         return Object.entries(data)
             .map(([key, value]) => {
                 return encodeURIComponent(key) + '=' + encodeURIComponent(value);
-            }).join('&');
+            })
+            .join('&');
     }
 };
 
 class VendorHttpEngine extends HttpEngine {
-    constructor(proxy, preset = {}) {
+    constructor(vendor, preset = {}) {
         super(preset);
-        this._proxyRequest = proxy.request.bind(proxy);
+        this._vendorRequest = vendor.request.bind(vendor);
     }
 
     _handleRequest(option) {
-        if (option.headers && !option.header) { //小程序的接口字段命名真是令人尴尬
+        if (option.headers && !option.header) {
+            //小程序的接口字段命名真是令人尴尬
             option.header = option.headers;
         }
         //微信小程序的转换规则 https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html
@@ -44,10 +46,12 @@ class VendorHttpEngine extends HttpEngine {
         }
         return new Promise((resolve, reject) => {
             const enableChunked = !!option.enableChunked;
-            const response = new Response(enableChunked);
-            const task = this._proxyRequest({
+            const enableChunkedBuffer = option.hasOwnProperty('enableChunkedBuffer') ? !!option.enableChunkedBuffer : true;
+            const response = new Response(enableChunked, enableChunkedBuffer);
+            const task = this._vendorRequest({
                 ...option,
                 success(res) {
+                    // 对于 Chunked 传输，success 在传输完毕之后才会调用
                     response._onSuccess(res);
                     if (!response.enableChunked) {
                         resolve(response);
@@ -64,7 +68,7 @@ class VendorHttpEngine extends HttpEngine {
                     task.abort();
                 }
             }
-            task.onHeadersReceived(headerData => {
+            task.onHeadersReceived((headerData) => {
                 response._onHeadersReceived(headerData);
                 if (response.enableChunked) {
                     resolve(response);

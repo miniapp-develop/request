@@ -1,9 +1,9 @@
 const LiteStream = require('./ChunkStream');
 class Response {
-    constructor(enableStream = false, res) {
+    constructor(enableStream = false, enableChunkedBuffer = ture) {
         this._enableStream = enableStream;
         if (this._enableStream) {
-            this._data = new LiteStream();
+            this._data = new LiteStream({ buffer: enableChunkedBuffer });
         } else {
             this._data = '';
         }
