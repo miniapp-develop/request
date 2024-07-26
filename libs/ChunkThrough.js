@@ -37,11 +37,6 @@ class ChunkThrough {
             this._buffers[event].push(data);
         }
     }
-
-    write(chunk) {
-        this.emit('data', chunk);
-    }
-
     end() {
         this.emit('end');
         this._finished = true;

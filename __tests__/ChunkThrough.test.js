@@ -12,17 +12,6 @@ describe('ChunkThrough', () => {
 
         expect(testHandler).toHaveBeenCalledWith('test');
     });
-    test('write', async () => {
-        const testHandler = jest.fn();
-        const chunkThrough = new ChunkThrough();
-        chunkThrough.on('data', (data) => {
-            testHandler(data);
-        });
-
-        chunkThrough.write('test');
-
-        expect(testHandler).toHaveBeenCalledWith('test');
-    });
     test('when emit after end then nothing is triggered', async () => {
         const testHandler = jest.fn();
         const chunkThrough = new ChunkThrough();
@@ -35,18 +24,6 @@ describe('ChunkThrough', () => {
 
         expect(testHandler).not.toHaveBeenCalled();
     });
-    test('when write after end then nothing is triggered', async () => {
-        const testHandler = jest.fn();
-        const chunkThrough = new ChunkThrough();
-        chunkThrough.on('data', (data) => {
-            testHandler(data);
-        });
-
-        chunkThrough.end();
-        chunkThrough.write('test');
-
-        expect(testHandler).not.toHaveBeenCalled();
-    });
     test('when emit after error then nothing is triggered', async () => {
         const testHandler = jest.fn();
         const chunkThrough = new ChunkThrough();
@@ -56,18 +33,6 @@ describe('ChunkThrough', () => {
 
         chunkThrough.error();
         chunkThrough.emit('data', 'test');
-
-        expect(testHandler).not.toHaveBeenCalled();
-    });
-    test('when write after error then nothing is triggered', async () => {
-        const testHandler = jest.fn();
-        const chunkThrough = new ChunkThrough();
-        chunkThrough.on('data', (data) => {
-            testHandler(data);
-        });
-
-        chunkThrough.error();
-        chunkThrough.write('test');
 
         expect(testHandler).not.toHaveBeenCalled();
     });

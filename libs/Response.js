@@ -17,7 +17,7 @@ class Response {
     }
 
     _onChunkReceived(chunk) {
-        this._data.write(chunk.data);
+        this._data.emit('data', chunk.data);
     }
 
     _onSuccess(res) {
