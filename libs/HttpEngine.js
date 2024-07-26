@@ -1,6 +1,6 @@
 class HttpEngine {
     constructor(preset = {}) {
-        this._preset = preset
+        this._preset = preset;
     }
 
     _handleRequest(option) {
@@ -8,11 +8,11 @@ class HttpEngine {
     }
 
     request(option = {}) {
-        option = {...this._preset, ...option};
-        if (!option.method) {
-            option.method = 'GET';
+        const reqOption = { ...this._preset, ...option };
+        if (!reqOption.method) {
+            reqOption.method = 'GET';
         }
-        return this._handleRequest(option);
+        return this._handleRequest(reqOption);
     }
 }
 
