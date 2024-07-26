@@ -1,87 +1,87 @@
-const ChunkStream = require('../libs/ChunkStream');
+const ChunkThrough = require('../libs/ChunkThrough');
 
-describe('ChunkStream', () => {
+describe('ChunkThrough', () => {
     test('on', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
-        chunkStream.on('data', (data) => {
+        const chunkThrough = new ChunkThrough();
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
 
-        chunkStream.emit('data', 'test');
+        chunkThrough.emit('data', 'test');
 
         expect(testHandler).toHaveBeenCalledWith('test');
     });
     test('write', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
-        chunkStream.on('data', (data) => {
+        const chunkThrough = new ChunkThrough();
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
 
-        chunkStream.write('test');
+        chunkThrough.write('test');
 
         expect(testHandler).toHaveBeenCalledWith('test');
     });
     test('when emit after end then nothing is triggered', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
-        chunkStream.on('data', (data) => {
+        const chunkThrough = new ChunkThrough();
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
 
-        chunkStream.end();
-        chunkStream.emit('data', 'test');
+        chunkThrough.end();
+        chunkThrough.emit('data', 'test');
 
         expect(testHandler).not.toHaveBeenCalled();
     });
     test('when write after end then nothing is triggered', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
-        chunkStream.on('data', (data) => {
+        const chunkThrough = new ChunkThrough();
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
 
-        chunkStream.end();
-        chunkStream.write('test');
+        chunkThrough.end();
+        chunkThrough.write('test');
 
         expect(testHandler).not.toHaveBeenCalled();
     });
     test('when emit after error then nothing is triggered', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
-        chunkStream.on('data', (data) => {
+        const chunkThrough = new ChunkThrough();
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
 
-        chunkStream.error();
-        chunkStream.emit('data', 'test');
+        chunkThrough.error();
+        chunkThrough.emit('data', 'test');
 
         expect(testHandler).not.toHaveBeenCalled();
     });
     test('when write after error then nothing is triggered', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
-        chunkStream.on('data', (data) => {
+        const chunkThrough = new ChunkThrough();
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
 
-        chunkStream.error();
-        chunkStream.write('test');
+        chunkThrough.error();
+        chunkThrough.write('test');
 
         expect(testHandler).not.toHaveBeenCalled();
     });
     test('when first-on after emit then the buffer is flushed', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
+        const chunkThrough = new ChunkThrough();
 
-        chunkStream.emit('data', 'pre 1');
-        chunkStream.emit('data', 'pre 2');
-        chunkStream.on('data', (data) => {
+        chunkThrough.emit('data', 'pre 1');
+        chunkThrough.emit('data', 'pre 2');
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
-        chunkStream.emit('data', 'post 1');
-        chunkStream.emit('other', 'post 2');
+        chunkThrough.emit('data', 'post 1');
+        chunkThrough.emit('other', 'post 2');
 
         expect(testHandler).toHaveBeenCalledWith('pre 1');
         expect(testHandler).toHaveBeenCalledWith('pre 2');
@@ -92,17 +92,17 @@ describe('ChunkStream', () => {
     test('when on after emit then only the first handler is called', async () => {
         const firstHandler = jest.fn();
         const secondHandler = jest.fn();
-        const chunkStream = new ChunkStream();
+        const chunkThrough = new ChunkThrough();
 
-        chunkStream.emit('data', 'pre 1');
-        chunkStream.emit('data', 'pre 2');
-        chunkStream.on('data', (data) => {
+        chunkThrough.emit('data', 'pre 1');
+        chunkThrough.emit('data', 'pre 2');
+        chunkThrough.on('data', (data) => {
             firstHandler(data);
         });
-        chunkStream.on('data', (data) => {
+        chunkThrough.on('data', (data) => {
             secondHandler(data);
         });
-        chunkStream.emit('data', 'post 1');
+        chunkThrough.emit('data', 'post 1');
 
         expect(firstHandler).toHaveBeenCalledWith('pre 1');
         expect(firstHandler).toHaveBeenCalledWith('pre 2');
@@ -114,18 +114,18 @@ describe('ChunkStream', () => {
     });
 });
 
-describe('ChunkStream[buffer = true as default]', () => {
+describe('ChunkThrough[buffer = true as default]', () => {
     test('when first-on after emit then the buffer is flushed', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream();
+        const chunkThrough = new ChunkThrough();
 
-        chunkStream.emit('data', 'pre 1');
-        chunkStream.emit('data', 'pre 2');
-        chunkStream.on('data', (data) => {
+        chunkThrough.emit('data', 'pre 1');
+        chunkThrough.emit('data', 'pre 2');
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
-        chunkStream.emit('data', 'post 1');
-        chunkStream.emit('other', 'post 2');
+        chunkThrough.emit('data', 'post 1');
+        chunkThrough.emit('other', 'post 2');
 
         expect(testHandler).toHaveBeenCalledWith('pre 1');
         expect(testHandler).toHaveBeenCalledWith('pre 2');
@@ -136,17 +136,17 @@ describe('ChunkStream[buffer = true as default]', () => {
     test('when on after emit then only the first handler is called', async () => {
         const firstHandler = jest.fn();
         const secondHandler = jest.fn();
-        const chunkStream = new ChunkStream();
+        const chunkThrough = new ChunkThrough();
 
-        chunkStream.emit('data', 'pre 1');
-        chunkStream.emit('data', 'pre 2');
-        chunkStream.on('data', (data) => {
+        chunkThrough.emit('data', 'pre 1');
+        chunkThrough.emit('data', 'pre 2');
+        chunkThrough.on('data', (data) => {
             firstHandler(data);
         });
-        chunkStream.on('data', (data) => {
+        chunkThrough.on('data', (data) => {
             secondHandler(data);
         });
-        chunkStream.emit('data', 'post 1');
+        chunkThrough.emit('data', 'post 1');
 
         expect(firstHandler).toHaveBeenCalledWith('pre 1');
         expect(firstHandler).toHaveBeenCalledWith('pre 2');
@@ -158,18 +158,18 @@ describe('ChunkStream[buffer = true as default]', () => {
     });
 });
 
-describe('ChunkStream[buffer = false]', () => {
+describe('ChunkThrough[buffer = false]', () => {
     test('when first-on after emit then the buffer is disabled', async () => {
         const testHandler = jest.fn();
-        const chunkStream = new ChunkStream({ buffer: false });
+        const chunkThrough = new ChunkThrough({ buffer: false });
 
-        chunkStream.emit('data', 'pre 1');
-        chunkStream.emit('data', 'pre 2');
-        chunkStream.on('data', (data) => {
+        chunkThrough.emit('data', 'pre 1');
+        chunkThrough.emit('data', 'pre 2');
+        chunkThrough.on('data', (data) => {
             testHandler(data);
         });
-        chunkStream.emit('data', 'post 1');
-        chunkStream.emit('other', 'post 2');
+        chunkThrough.emit('data', 'post 1');
+        chunkThrough.emit('other', 'post 2');
 
         expect(testHandler).not.toHaveBeenCalledWith('pre 1');
         expect(testHandler).not.toHaveBeenCalledWith('pre 2');

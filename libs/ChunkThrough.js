@@ -1,4 +1,4 @@
-class ChunkStream {
+class ChunkThrough {
     constructor({ buffer } = { buffer: true }) {
         this._events = {};
         this._finished = false;
@@ -53,4 +53,4 @@ class ChunkStream {
     }
 }
 
-module.exports = ChunkStream;
+module.exports = ChunkThrough;

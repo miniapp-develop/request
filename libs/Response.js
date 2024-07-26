@@ -1,9 +1,10 @@
-const LiteStream = require('./ChunkStream');
+const ChunkThrough = require('./ChunkThrough');
+
 class Response {
-    constructor(enableStream = false, enableChunkedBuffer = ture) {
-        this._enableStream = enableStream;
-        if (this._enableStream) {
-            this._data = new LiteStream({ buffer: enableChunkedBuffer });
+    constructor(enableChunked = false, enableChunkedBuffer = ture) {
+        this._enableChunked = enableChunked;
+        if (this._enableChunked) {
+            this._data = new ChunkThrough({ buffer: enableChunkedBuffer });
         } else {
             this._data = '';
         }
@@ -20,7 +21,7 @@ class Response {
     }
 
     _onSuccess(res) {
-        if (this._enableStream) {
+        if (this._enableChunked) {
             this._data.end();
         } else {
             this._data = res.data;
@@ -28,13 +29,13 @@ class Response {
     }
 
     _onFail(err) {
-        if (this._enableStream) {
+        if (this._enableChunked) {
             this._data.error(err);
         }
     }
 
     get enableChunked() {
-        return this._enableStream;
+        return this._enableChunked;
     }
 
     get headers() {
