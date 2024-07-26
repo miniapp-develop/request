@@ -1,12 +1,12 @@
 # miniapp request
 
-一个简单的小程序 request 封装，在不改变原有的小程序 request 的基础上，增加了以下支持：
+一个轻量的小程序 request 封装，在不改变原有的小程序 request 的基础上，增加了以下支持：
 
 1. 自定义拦截器（RequestInterceptor、ResponseInterceptor）；
 2. 支持 Promise；
 3. 支持取消请求；
 4. 更常用的接口字段命名；
-5. 支持流式传输；
+5. 支持 chunked 传输；
 
 ## 使用方法
 
@@ -157,7 +157,7 @@ request
 
 对于 request 拦截器，先添加的拦截器都会**后**执行
 对于 response 拦截器，先添加的拦截器都会**先**执行。
-或者类比**洋葱模型**，因此，上述拦截器的调用顺序为：
+因此，上述拦截器的调用顺序为：
 
     -> 1. request interceptor B
     -> 2. request interceptor A
@@ -173,8 +173,6 @@ request
 
 ```javascript
 Page({
-    onLoad(query) {
-    },
     onTapGet(e) {
         const controller = new AbortController();
         request({
@@ -196,11 +194,24 @@ Page({
 
 ### chunked 传输说明
 
-开启 chunked 传输需要添加请求参数：`enableChunked: true`，在这种情况下，wx.request 的 success 回调会等到传输完毕之后再调用。
-如果你期望 chunked 传输，但是服务器的返回结果并不是 chunked 传输，那么就只能正常获取到
-headers，而无法获取到的实际的响应体，所以需要注意服务器的返回方式。
+#### enableChunked 参数
 
-以 express 为例，用 write + end 进行响应返回。
+开启 chunked 传输需要添加 option 参数：`enableChunked: true`，这是 wx.request 的官方参数，
+
+需要说明的是，在启用 enableChunked 的情况下：
+
+1. wx.request 的 success 回调会等到传输全部结束之后再调用。
+2. 如果服务器的返回结果并不是 chunked 传输（比如没有配置 {'Transfer-Encoding', 'chunked'} header），那么就只能正常获取到
+   headers，而无法获取到的实际的响应体，所以需要注意服务器的返回方式。 以 express 为例，用 write + end 进行响应返回。
+
+#### enableChunkedBuffer
+
+这是 `@mini-dev/request` 自定义的参数，默认值是 true。
+
+也就是说，如果服务器已经返回了数据，但是你还没有添加 on 监听事件，那么已经返回的数据会缓存起来。
+当你第一次添加对应的 event-handler 时，会一次性传输给 event-handler。
+
+至于为何会存在这种情况，一个原因就是由于res拦截器是异步的，有可能造成了实际监听的延迟。
 
 ## 示例
 
