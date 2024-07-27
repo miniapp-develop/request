@@ -221,9 +221,8 @@ Page({
 
 ### 0.3.2
 
-- [ ] 缓存chunk
-- [ ] form-data
-- [ ] 中断chunk
+- 支持缓存chunk
+- 支持 `enctype` 参数，可选值：form-data
 
 ### 0.3.1
 

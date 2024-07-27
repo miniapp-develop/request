@@ -126,7 +126,7 @@ describe('ChunkThrough[buffer = true as default]', () => {
 describe('ChunkThrough[buffer = false]', () => {
     test('when first-on after emit then the buffer is disabled', async () => {
         const testHandler = jest.fn();
-        const chunkThrough = new ChunkThrough({ buffer: false });
+        const chunkThrough = new ChunkThrough({ enableBuffer: false });
 
         chunkThrough.emit('data', 'pre 1');
         chunkThrough.emit('data', 'pre 2');

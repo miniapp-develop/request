@@ -4,7 +4,7 @@ class Response {
     constructor(enableChunked = false, enableChunkedBuffer = ture) {
         this._enableChunked = enableChunked;
         if (this._enableChunked) {
-            this._data = new ChunkThrough({ buffer: enableChunkedBuffer });
+            this._data = new ChunkThrough({ enableBuffer: enableChunkedBuffer });
         } else {
             this._data = '';
         }

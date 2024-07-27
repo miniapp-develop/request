@@ -1,15 +1,15 @@
 class ChunkThrough {
-    constructor({ buffer } = { buffer: true }) {
+    constructor({ enableBuffer } = { enableBuffer: true }) {
         this._events = {};
         this._finished = false;
-        this._buffer = buffer;
+        this._enableBuffer = enableBuffer;
         this._buffers = {};
     }
 
     on(event, handler) {
         if (!this._events[event]) {
             this._events[event] = [];
-            if (this._buffer) {
+            if (this._enableBuffer) {
                 if (this._buffers[event]) {
                     for (const data of this._buffers[event]) {
                         handler(data);
@@ -30,13 +30,14 @@ class ChunkThrough {
             for (const handler of handlers) {
                 handler(data);
             }
-        } else if (this._buffer) {
+        } else if (this._enableBuffer) {
             if (!this._buffers[event]) {
                 this._buffers[event] = [];
             }
             this._buffers[event].push(data);
         }
     }
+
     end() {
         this.emit('end');
         this._finished = true;
