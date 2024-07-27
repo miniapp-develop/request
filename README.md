@@ -219,6 +219,10 @@ Page({
 
 ## ChangeLogs
 
+### 0.3.3
+
+todo: 支持 `enctype` 参数，可选值：form-data
+
 ### 0.3.2
 
 - 支持缓存chunk;
