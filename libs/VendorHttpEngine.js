@@ -1,18 +1,6 @@
 const HttpEngine = require('./HttpEngine');
 const Response = require('./Response');
-
-const qs = {
-    stringify(data) {
-        if (!data) {
-            return '';
-        }
-        return Object.entries(data)
-            .map(([key, value]) => {
-                return encodeURIComponent(key) + '=' + encodeURIComponent(value);
-            })
-            .join('&');
-    }
-};
+const { urlStringify } = require('./qs');
 
 class VendorHttpEngine extends HttpEngine {
     constructor(vendor, preset = {}) {
@@ -32,16 +20,7 @@ class VendorHttpEngine extends HttpEngine {
                     option.data = option.params; // 小程序会自己将 data 添加到 url 上。
                 }
             } else {
-                const queryString = qs.stringify(option.params);
-                if (queryString.length > 0) {
-                    if (option.url.indexOf('?') === -1) {
-                        option.url += '?' + queryString;
-                    } else if (option.url.endsWith('?')) {
-                        option.url += queryString;
-                    } else {
-                        option.url += '&' + queryString;
-                    }
-                }
+                option.url = urlStringify(option.url, option.params); //如果不想把参数添加到 url 上，就直接使用 data 字段，而不应该使用 params 字段
             }
         }
         return new Promise((resolve, reject) => {

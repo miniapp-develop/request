@@ -29,10 +29,13 @@ describe('VendorHttpEngine', () => {
             url: 'https://x.y.z',
             method: method,
             params: {
-                a: 100
+                a: 100,
+                b: 200
             }
         });
 
-        expect(mockRequest.mock.calls[0][0].url).toEqual('https://x.y.z?a=100');
+        expect(mockRequest.mock.calls[0][0].url).toContain('https://x.y.z?');
+        expect(mockRequest.mock.calls[0][0].url).toContain('a=100');
+        expect(mockRequest.mock.calls[0][0].url).toContain('b=200');
     });
 });
