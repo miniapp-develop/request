@@ -13,7 +13,24 @@ class TestHttpEngine extends HttpEngine {
 }
 
 function createTestVendor() {
-    const request = jest.fn();
+    const request = jest.fn().mockImplementation((option) => {
+        if (option.enableChunked) {
+            return {
+                onHeadersReceived(callback) {
+                    callback({ statusCode: 200, headers: { from: 'test' } });
+                },
+                onChunkReceived(callback) {
+                    callback({ data: 'test' });
+                }
+            };
+        } else {
+            option.success({ data: 'test' });
+            return {
+                onHeadersReceived(callback) {},
+                onChunkReceived(callback) {}
+            };
+        }
+    });
     return {
         request: request
     };

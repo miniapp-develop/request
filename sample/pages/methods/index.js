@@ -1,8 +1,7 @@
 import request from '../../app.request';
 
 Page({
-    onLoad(query) {
-    },
+    onLoad(query) {},
     onTap(e) {
         const method = e.currentTarget.dataset.method;
         if (method === 'GET') {
@@ -14,6 +13,7 @@ Page({
             })
                 .then((res) => {
                     console.log(res);
+                    console.log('data', res.data);
                 })
                 .catch((err) => {
                     console.error(err);

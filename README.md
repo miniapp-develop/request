@@ -221,7 +221,7 @@ Page({
 
 ### 0.3.3
 
-todo: 支持 `enctype` 参数，可选值：form-data
+todo: 支持 `enctype` 参数，可选值：`urlencoded`
 
 ### 0.3.2
 

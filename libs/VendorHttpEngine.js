@@ -17,7 +17,7 @@ const qs = {
 class VendorHttpEngine extends HttpEngine {
     constructor(vendor, preset = {}) {
         super(preset);
-        this._vendor = vendor;
+        this._vendorRequest = vendor.request.bind(vendor);
     }
 
     _handleRequest(option) {
@@ -48,7 +48,7 @@ class VendorHttpEngine extends HttpEngine {
             const enableChunked = !!option.enableChunked;
             const enableChunkedBuffer = option.hasOwnProperty('enableChunkedBuffer') ? !!option.enableChunkedBuffer : true;
             const response = new Response(enableChunked, enableChunkedBuffer);
-            const task = this._vendor.request({
+            const task = this._vendorRequest({
                 ...option,
                 success(res) {
                     // 对于 Chunked 传输，success 在传输完毕之后才会调用
