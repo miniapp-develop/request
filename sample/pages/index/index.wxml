@@ -2,5 +2,6 @@
     <view class="route-view" bind:tap="onTap" data-method="methods">HTTP Methods</view>
     <view class="route-view" bind:tap="onTap" data-method="control">HTTP Control</view>
     <view class="route-view" bind:tap="onTap" data-method="stream">HTTP Stream</view>
+    <view class="route-view" bind:tap="onTap" data-method="mount">mount request</view>
     <view class="route-view" bind:tap="onTap" data-method="custom">Custom request()</view>
 </view>

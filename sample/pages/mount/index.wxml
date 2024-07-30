@@ -1,0 +1,6 @@
+<view class="page">
+    <view class="action-vew" bind:tap="onTap" data-method="request">request()</view>
+    <view class="action-vew" bind:tap="onTap" data-method="wx.request">wx.request()</view>
+    <view class="action-vew" bind:tap="onTap" data-method="wx.requestx">wx.requestx()</view>
+    <view class="action-vew" bind:tap="onTap" data-method="this.request">this.request()</view>
+</view>

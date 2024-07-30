@@ -4,6 +4,7 @@
         "pages/methods/index",
         "pages/control/index",
         "pages/stream/index",
+        "pages/mount/index",
         "pages/custom/index"
     ],
     "window": {

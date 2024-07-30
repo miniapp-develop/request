@@ -13,6 +13,10 @@ Page({
             wx.navigateTo({
                 url: '/pages/stream/index'
             });
+        } else if (method === 'mount') {
+            wx.navigateTo({
+                url: '/pages/mount/index'
+            });
         } else if (method === 'custom') {
             wx.navigateTo({
                 url: '/pages/custom/index'

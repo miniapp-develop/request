@@ -5,7 +5,7 @@ Page({
     onTap(e) {
         const method = e.currentTarget.dataset.method;
         if (method === 'GET') {
-            wx.request({
+            request({
                 url: 'https://httpbin.org/get?urlname=urlget',
                 data: {
                     name: 'get name'
