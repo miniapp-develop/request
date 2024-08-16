@@ -217,15 +217,19 @@ Page({
 
 参见 [sample 小程序](./sample)，[sample 小程序 对应的测试服务器](./sample-server)
 
+## Todo
+
+支持 `enctype` 参数，可选值：`urlencoded`
+
 ## ChangeLogs
 
 ### 0.3.3
 
-todo: 支持 `enctype` 参数，可选值：`urlencoded`
+1. 修正 `mount` 方法的实现问题，再次声明：不建议替换原生同名方法。
 
 ### 0.3.2
 
-- 支持缓存chunk;
+1. 支持缓存chunks;
 
 ### 0.3.1
 
