@@ -3,23 +3,29 @@ class AbortSignal {
         this.aborted = false;
         this.onabort = () => {
         };
-        this._task = null;
+        this._tasks = [];
     }
 
     _attachTask_(task) {
         if (this.aborted) {
             return;
         }
-        this._task = task;
+        this._tasks.push(task);
     }
 
     _abort_() {
+        if (this.aborted) {
+            return;
+        }
         this.aborted = true;
-        if (this._task) {
-            this._task.abort();
+        const tasks = this._tasks;
+        this._tasks = [];
+        for (const task of tasks) {
+            task.abort();
+        }
+        if (tasks.length > 0) {
             this.onabort && this.onabort();
         }
-        this._task = null;
     }
 }
 

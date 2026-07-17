@@ -10,7 +10,7 @@ Page({
         const method = e.currentTarget.dataset.method;
         if (method === 'request') {
             request({
-                url: 'https://httpbin.org/get?urlname=urlget',
+                url: 'http://127.0.0.1:3000/get?urlname=urlget',
                 data: {
                     name: 'get name'
                 }
@@ -24,7 +24,7 @@ Page({
                 });
         } else if (method === 'wx.request') {
             wx.request({
-                url: 'https://httpbin.org/get?urlname=urlget',
+                url: 'http://127.0.0.1:3000/get?urlname=urlget',
                 data: {
                     name: 'get name'
                 }
@@ -38,7 +38,7 @@ Page({
                 });
         } else if (method === 'wx.requestx') {
             wx.requestx({
-                url: 'https://httpbin.org/get?urlname=urlget',
+                url: 'http://127.0.0.1:3000/get?urlname=urlget',
                 data: {
                     name: 'get name'
                 }
@@ -52,7 +52,7 @@ Page({
                 });
         } else if (method === 'this.request') {
             this.request({
-                url: 'https://httpbin.org/get?urlname=urlget',
+                url: 'http://127.0.0.1:3000/get?urlname=urlget',
                 data: {
                     name: 'get name'
                 }

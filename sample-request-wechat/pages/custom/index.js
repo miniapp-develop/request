@@ -11,7 +11,7 @@ Page({
     },
     onTap() {
         pageRequest({
-            url: 'https://httpbin.org/get?urlname=urlget',
+            url: 'http://127.0.0.1:3000/get?urlname=urlget',
             data: {
                 name: 'get name'
             }

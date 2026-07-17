@@ -6,7 +6,7 @@ Page({
         const method = e.currentTarget.dataset.method;
         if (method === 'GET') {
             request({
-                url: 'https://httpbin.org/get?urlname=urlget',
+                url: 'http://127.0.0.1:3000/get?urlname=urlget',
                 data: {
                     name: 'get name'
                 }
@@ -20,7 +20,7 @@ Page({
                 });
         } else if (method === 'GET WITH PARAMS') {
             request({
-                url: 'https://httpbin.org/get?urlname=urlget',
+                url: 'http://127.0.0.1:3000/get?urlname=urlget',
                 params: {
                     name: 'get_params_name'
                 }
@@ -33,7 +33,7 @@ Page({
                 });
         } else if (method === 'POST') {
             request({
-                url: 'https://httpbin.org/post?urlname=urlpost',
+                url: 'http://127.0.0.1:3000/post?urlname=urlpost',
                 method: 'post',
                 data: {
                     name: 'post_data_name'
@@ -50,7 +50,7 @@ Page({
                 });
         } else if (method === 'DELETE') {
             request({
-                url: 'https://httpbin.org/delete?urlname=urldelete',
+                url: 'http://127.0.0.1:3000/delete?urlname=urldelete',
                 method: 'delete',
                 data: {
                     name: 'delete name'
@@ -64,7 +64,7 @@ Page({
                 });
         } else if (method === 'PUT') {
             request({
-                url: 'https://httpbin.org/put?urlname=urlput',
+                url: 'http://127.0.0.1:3000/put?urlname=urlput',
                 method: 'put',
                 data: {
                     name: 'put name'
@@ -78,7 +78,7 @@ Page({
                 });
         } else if (method === 'PATCH') {
             request({
-                url: 'https://httpbin.org/patch?urlname=urlpatch',
+                url: 'http://127.0.0.1:3000/patch?urlname=urlpatch',
                 method: 'patch',
                 data: {
                     name: 'patch name'
@@ -92,7 +92,7 @@ Page({
                 });
         } else if (method === 'OPTIONS') {
             request({
-                url: 'https://httpbin.org',
+                url: 'http://127.0.0.1:3000',
                 method: 'OPTIONS',
                 data: {
                     name: 'OPTIONS name'
@@ -106,7 +106,7 @@ Page({
                 });
         } else if (method === 'HEAD') {
             request({
-                url: 'https://httpbin.org',
+                url: 'http://127.0.0.1:3000',
                 method: 'HEAD',
                 data: {
                     name: 'HEAD name'
@@ -120,7 +120,7 @@ Page({
                 });
         } else if (method === 'TRACE') {
             request({
-                url: 'https://httpbin.org',
+                url: 'http://127.0.0.1:3000',
                 method: 'TRACE',
                 data: {
                     name: 'TRACE name'
@@ -134,7 +134,7 @@ Page({
                 });
         } else if (method === 'CONNECT') {
             request({
-                url: 'https://httpbin.org',
+                url: 'http://127.0.0.1:3000',
                 method: 'CONNECT',
                 data: {
                     name: 'CONNECT name'

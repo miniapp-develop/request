@@ -2,6 +2,12 @@ const HttpEngine = require('./HttpEngine');
 const Response = require('./Response');
 const { urlStringify } = require('./qs');
 
+function createAbortError() {
+    const error = new Error('request:fail abort');
+    error.errMsg = 'request:fail abort';
+    return error;
+}
+
 class VendorHttpEngine extends HttpEngine {
     constructor(vendor, preset = {}) {
         super(preset);
@@ -24,6 +30,11 @@ class VendorHttpEngine extends HttpEngine {
             }
         }
         return new Promise((resolve, reject) => {
+            if (option.signal && option.signal.aborted) {
+                // 请求发出前 signal 已经被 abort，直接短路，不再发起真实网络请求
+                reject(createAbortError());
+                return;
+            }
             const enableChunked = !!option.enableChunked;
             const enableChunkedBuffer = option.hasOwnProperty('enableChunkedBuffer') ? !!option.enableChunkedBuffer : true;
             const response = new Response(enableChunked, enableChunkedBuffer);
@@ -43,9 +54,6 @@ class VendorHttpEngine extends HttpEngine {
             });
             if (option.signal) {
                 option.signal._attachTask_(task);
-                if (option.signal.aborted) {
-                    task.abort();
-                }
             }
             task.onHeadersReceived((headerData) => {
                 response._onHeadersReceived(headerData);

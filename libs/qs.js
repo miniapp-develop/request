@@ -3,6 +3,7 @@ function queryStringify(data) {
         return '';
     }
     return Object.entries(data)
+        .filter(([key, value]) => value !== null && value !== undefined)
         .map(([key, value]) => {
             return encodeURIComponent(key) + '=' + encodeURIComponent(value);
         })

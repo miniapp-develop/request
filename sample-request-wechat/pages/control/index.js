@@ -6,7 +6,7 @@ Page({
     },
     onTapTimeout() {
         request({
-            url: 'https://httpbin.org/delay/8',
+            url: 'http://127.0.0.1:3000/delay/8',
             timeout: 3000,
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -20,7 +20,7 @@ Page({
     onTapAbort() {
         const controller = new AbortController();
         request({
-            url: 'https://httpbin.org/delay/8',
+            url: 'http://127.0.0.1:3000/delay/8',
             signal: controller.signal
         }).then((res) => {
             console.log(res);

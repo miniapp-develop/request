@@ -2,8 +2,41 @@ const express = require('express');
 const server = express();
 const INTERVAL = 500;
 
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+
 server.get('/', (req, res) => {
     res.send('Hello World!');
+});
+
+function echo(req, res) {
+    res.json({
+        args: req.query,
+        data: req.body,
+        headers: req.headers,
+        method: req.method,
+        url: req.originalUrl
+    });
+}
+
+// 模拟 httpbin.org 的 /get /post /put /patch /delete 等回显接口，
+// 以及 OPTIONS/HEAD/TRACE/CONNECT 等在根路径上的回显（GET / 仍走上面的 Hello World）
+server.all('/', echo);
+server.all('/get', echo);
+server.all('/post', echo);
+server.all('/put', echo);
+server.all('/patch', echo);
+server.all('/delete', echo);
+
+server.get('/delay/:seconds', (req, res) => {
+    const seconds = Math.min(Number(req.params.seconds) || 0, 10);
+    setTimeout(() => {
+        res.json({
+            args: req.query,
+            headers: req.headers,
+            url: req.originalUrl
+        });
+    }, seconds * 1000);
 });
 
 const messages = ['Hello', 'Are ', 'you Ok?'];

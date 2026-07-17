@@ -4,6 +4,9 @@
     "description": "miniapp request",
     "miniprogram": "libs",
     "main": "libs/index.js",
+    "files": [
+        "libs"
+    ],
     "scripts": {
         "test": "jest"
     },
@@ -14,12 +17,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+git@github.com:miniapp-develop/request"
+        "url": "git+https://github.com/xesam/minidev-request.git"
     },
     "bugs": {
-        "url": "https://github.com/miniapp-develop/request"
+        "url": "https://github.com/xesam/minidev-request/issues"
     },
-    "homepage": "https://github.com/miniapp-develop/request",
+    "homepage": "https://github.com/xesam/minidev-request#readme",
     "devDependencies": {
         "jest": "^29.7.0"
     },

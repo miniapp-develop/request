@@ -1,7 +1,7 @@
 const ChunkThrough = require('./ChunkThrough');
 
 class Response {
-    constructor(enableChunked = false, enableChunkedBuffer = ture) {
+    constructor(enableChunked = false, enableChunkedBuffer = true) {
         this._enableChunked = enableChunked;
         if (this._enableChunked) {
             this._data = new ChunkThrough({ enableBuffer: enableChunkedBuffer });

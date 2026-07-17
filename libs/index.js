@@ -43,11 +43,13 @@ function create(engine = _DefaultHttpEngine) {
         if (!this.engine) {
             throw new Error('No engine found');
         }
-        return _async(this.requestInterceptors, req)
-            .then(this.engine.request.bind(this.engine))
-            .then(res => {
-                return _async(this.responseInterceptors, res, req);
-            });
+        return Promise.resolve().then(() => {
+            return _async(this.requestInterceptors, req)
+                .then(this.engine.request.bind(this.engine))
+                .then(res => {
+                    return _async(this.responseInterceptors, res, req);
+                });
+        });
     };
     _request.mount = function(host, name = 'request') {
         if (host) {
