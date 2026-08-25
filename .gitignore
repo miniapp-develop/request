@@ -1,6 +1,14 @@
 *.iml
 .idea
 node_modules
+dist
+miniprogram_dist
 miniprogram_npm
+coverage
+.vscode
+.DS_Store
 .npmrc
-sample/project.private.config.json
+CLAUDE.md
+
+*.private.config.json
+\.*

@@ -43,11 +43,13 @@
     "ignoreUploadUnusedFiles": true,
     "compileWorklet": false,
     "localPlugins": false,
-    "condition": false
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.20.3",
-  "appid": "wx9029e39ac1befc18",
+  "libVersion": "3.0.2",
+  "appid": "your-appid",
   "projectname": "mini-dev/request",
   "condition": {},
   "editorSetting": {

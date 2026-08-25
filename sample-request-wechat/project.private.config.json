@@ -1,6 +1,7 @@
 {
   "libVersion": "3.16.2",
-  "projectname": "mini-dev%2Frequest",
+  "appid": "wxc2353d904d4d643c",
+  "projectname": "sample-request-wechat",
   "condition": {},
   "setting": {
     "urlCheck": false,

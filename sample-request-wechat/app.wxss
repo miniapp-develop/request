@@ -20,3 +20,27 @@ page {
     padding: 0.5em;
     font-size: 1.2em;
 }
+
+/* 每页共享的结果展示区：把 console 输出同步落到 UI，不开调试器也能看到结果 */
+.result {
+    background: #fff;
+    border-radius: 0.3em;
+    padding: 0.8em;
+    margin: 0.5em;
+    font-size: 0.8em;
+    color: #333;
+    min-height: 4em;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.result.empty {
+    color: #999;
+}
+
+.note {
+    display: block;
+    padding: 0.3em 0.8em;
+    font-size: 0.7em;
+    color: #888;
+}

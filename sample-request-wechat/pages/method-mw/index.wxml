@@ -1,0 +1,11 @@
+<view class="page">
+    <view class="result">{{result}}</view>
+
+    <view class="s-header">augment-only createMethod + 方法级拦截器</view>
+    <view class="note">方法级拦截器 = koa 洋葱 (ctx, next)，能短路核心、包裹内层链；便捷层两段式只能改入参/出参</view>
+    <view class="action-vew" bind:tap="onTapDefault">① 方法默认拦截器（log + auth）</view>
+    <view class="action-vew" bind:tap="onTapPerCall">② 单次追加 ext.interceptors（改请求 + 改响应）</view>
+    <view class="action-vew" bind:tap="onTapShortCircuit">③ 短路核心（不调 next，mock 返回）</view>
+    <view class="action-vew" bind:tap="onTapRetryDelay">④ retryDelay 自定义退避</view>
+    <view class="action-vew" bind:tap="onTapGuard">⑤ 包裹内层链（try/catch next）</view>
+</view>

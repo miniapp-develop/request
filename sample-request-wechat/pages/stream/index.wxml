@@ -1,11 +1,16 @@
 <view class="page">
-    <viewe class="s-header">chunk buffer = true [default]</viewe>
+    <view class="result">{{result}}</view>
+
+    <view class="s-header">chunk buffer = true [默认]</view>
+    <view class="note">首帧 headers 即 resolve；到达 chunk 缓冲，监听后补发</view>
     <view class="action-vew" bind:tap="onTapStreamWithHeader">Stream with Header</view>
     <view class="action-vew" bind:tap="onTapStreamWithoutHeader">Stream without Header</view>
     <view class="action-vew" bind:tap="onTapStreamTimeout">Stream Timeout</view>
     <view class="action-vew" bind:tap="onTapPlainTextWithHeader">Plain Text with header</view>
     <view class="action-vew" bind:tap="onTapPlainTextWithoutHeader">Plain Text without header</view>
     <view class="action-vew" bind:tap="onTapStreamThenAbort">Abort after 1s</view>
-    <viewe class="s-header">chunk buffer = false</viewe>
-    <view class="action-vew" bind:tap="onTapStreamWithHeaderNoBuffer">Stream with Header</view>
+
+    <view class="s-header">chunk buffer = false</view>
+    <view class="note">不缓冲未监听 chunk：监听前到达的 chunk 可能丢失</view>
+    <view class="action-vew" bind:tap="onTapStreamWithHeaderNoBuffer">Stream with Header (no buffer)</view>
 </view>

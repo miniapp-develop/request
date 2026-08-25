@@ -1,4 +1,7 @@
 <view class="page">
+    <view class="result">{{result}}</view>
+
+    <view class="s-header">HTTP Methods</view>
     <view class="action-vew" bind:tap="onTap" data-method="GET">GET</view>
     <view class="action-vew" bind:tap="onTap" data-method="GET WITH PARAMS">GET WITH PARAMS</view>
     <view class="action-vew" bind:tap="onTap" data-method="POST">POST</view>
@@ -9,4 +12,8 @@
     <view class="action-vew" bind:tap="onTap" data-method="HEAD">HEAD</view>
     <view class="action-vew" bind:tap="onTap" data-method="TRACE">TRACE</view>
     <view class="action-vew" bind:tap="onTap" data-method="CONNECT">CONNECT</view>
+
+    <view class="s-header">canonical headers</view>
+    <view class="note">同一份复数 headers 写法，三平台经 engine 映射后都能正确发出/读回</view>
+    <view class="action-vew" bind:tap="onTap" data-method="CANONICAL">GET with canonical headers</view>
 </view>

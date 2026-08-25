@@ -1,0 +1,14 @@
+{
+  "name": "sample-request-douyin",
+  "version": "0.0.0",
+  "private": true,
+  "main": "app.js",
+  "dependencies": {
+    "@mini-dev/request-tt": "workspace:*",
+    "@mini-dev/request": "workspace:*",
+    "koa-compose": "catalog:"
+  },
+  "license": "ISC",
+  "description": "@mini-dev/request-tt 抖音小程序示例",
+  "type": "commonjs"
+}

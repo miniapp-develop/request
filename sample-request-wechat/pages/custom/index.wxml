@@ -1,3 +1,11 @@
 <view class="page">
-    <view class="action-vew" bind:tap="onTap">pageRequest()</view>
+    <view class="result">{{result}}</view>
+
+    <view class="s-header">独立实例</view>
+    <view class="note">createRequest() 自建实例，不经 app.js 默认单例上的全局拦截器</view>
+    <view class="action-vew" bind:tap="onTapBasic">pageRequest() 基础请求</view>
+
+    <view class="s-header">两段式拦截器洋葱序</view>
+    <view class="note">注册 A、B 两对，执行序 reqB→reqA→[核心]→resA→resB（后注册在外层）</view>
+    <view class="action-vew" bind:tap="onTapOrder">洋葱序演示（A、B 两对）</view>
 </view>

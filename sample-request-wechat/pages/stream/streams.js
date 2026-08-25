@@ -1,106 +1,81 @@
-const { AbortController } = require('@mini-dev/request');
-import request from '../../app.request';
+// @mini-dev/request 微信示例 - chunked 流式（wx 专有能力）
+//
+// wx engine 把原生 onHeadersReceived/onChunkReceived 映射成核心 Response 的流式接口：
+// 首帧 headers 即 resolve 出 Response（data 为 ChunkThrough 流），chunks 经 data 事件透传，success 收尾 end。
+// enableChunkedBuffer（默认 true）缓存到达但未监听的 chunk；设 false 可观察「未缓冲时监听前的 chunk 丢失」。
+// my/tt 原生无分块事件，不支持 chunked——见 alipay/douyin 示例。
+const { AbortController, createRequest } = require('@mini-dev/request-wx');
+const formatError = require('../../utils/formatError');
 
-const streamRequest = request
-    .create()
-    .addRequestInterceptor((req) => {
-        console.log(`[Page Streams] Interceptor req = `, req);
-        return req;
-    })
-    .addResponseInterceptor((res) => {
-        console.log(`[Page Streams] Interceptor res = `, res);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(res);
-            }, 1000);
-        });
-    });
+const BASE = 'http://127.0.0.1:8008';
 
-function runRequest(option) {
+// 复用单个 decoder，避免每个 chunk 都 new 一个 TextDecoder。
+const decoder = new TextDecoder('utf-8');
+
+const streamRequest = createRequest();
+
+// runRequest(option, log)：log 把状态/chunk 同步落到 UI 结果区。
+function runRequest(option, log) {
+    log(`请求中：${option.url.replace(BASE, '')}（buffer=${option.enableChunkedBuffer !== false}）`);
     return streamRequest(option)
         .then((res) => {
-            console.log('[Page Streams]:res=', res);
+            const chunks = [];
             res.data.on('data', (chunk) => {
-                console.log('[Page Streams]:chunk=', chunk, new TextDecoder('utf-8').decode(chunk));
+                const text = decoder.decode(chunk);
+                chunks.push(text);
+                console.log('[Streams] chunk', chunk, text);
+                log(`chunk: ${text}`);
             });
             res.data.on('end', () => {
-                console.log('[Page Streams]:end');
+                console.log('[Streams] end');
+                log(`end（共 ${chunks.length} 个 chunk）`);
             });
             res.data.on('error', (err) => {
-                console.error('[Page Streams]:error', err);
+                console.error('[Streams] error', err);
+                log(`stream error: ${formatError(err)}`);
             });
         })
         .catch((err) => {
-            console.error('[Page Streams]:err=', err);
+            console.error('[Streams] err', err);
+            log(`失败: ${formatError(err)}`);
         });
 }
 
-export function streamWithHeader() {
-    runRequest({
-        url: 'http://127.0.0.1:3000/stream-with-header',
-        timeout: 20000,
-        enableChunked: true,
-        header: {}
-    });
+// 各端点公共配置：enableChunked + ext.timeout。
+function stream(option, log) {
+    return runRequest({ enableChunked: true, ...option }, log);
 }
 
-export function streamWithoutHeader() {
-    runRequest({
-        url: 'http://127.0.0.1:3000/stream-without-header',
-        timeout: 20000,
-        enableChunked: true,
-        header: {}
-    });
+export function streamWithHeader(log) {
+    return stream({ url: `${BASE}/stream-with-header`, ext: { timeout: 20000 } }, log);
 }
 
-export function streamTimeout() {
-    runRequest({
-        url: 'http://127.0.0.1:3000/stream-timeout',
-        timeout: 3000,
-        enableChunked: true,
-        header: {}
-    });
+export function streamWithoutHeader(log) {
+    return stream({ url: `${BASE}/stream-without-header`, ext: { timeout: 20000 } }, log);
 }
 
-export function plainTextWithHeader() {
-    runRequest({
-        url: 'http://127.0.0.1:3000/plain-with-header',
-        timeout: 3000,
-        enableChunked: true,
-        header: {}
-    });
+export function streamTimeout(log) {
+    return stream({ url: `${BASE}/stream-timeout`, ext: { timeout: 3000 } }, log);
 }
 
-export function plainTextWithoutHeader() {
-    runRequest({
-        url: 'http://127.0.0.1:3000/plain-without-header',
-        timeout: 3000,
-        enableChunked: true,
-        header: {}
-    });
+export function plainTextWithHeader(log) {
+    return stream({ url: `${BASE}/plain-with-header`, ext: { timeout: 3000 } }, log);
 }
 
-export function streamThenAbort() {
+export function plainTextWithoutHeader(log) {
+    return stream({ url: `${BASE}/plain-without-header`, ext: { timeout: 3000 } }, log);
+}
+
+// 用 /stream-hang-up（持续推送永不结束）演示中途 abort：1s 后 abort 必然打断在途流。
+export function streamThenAbort(log) {
     const controller = new AbortController();
     setTimeout(() => {
-        console.log('[Page Streams]:abort');
+        console.log('[Streams] abort');
         controller.abort();
     }, 1000);
-    runRequest({
-        url: 'http://127.0.0.1:3000/stream-with-header',
-        timeout: 20000,
-        signal: controller.signal,
-        enableChunked: true,
-        header: {}
-    });
+    return stream({ url: `${BASE}/stream-hang-up`, ext: { timeout: 20000, signal: controller.signal } }, log);
 }
 
-export function streamWithHeaderNoBuffer() {
-    runRequest({
-        url: 'http://127.0.0.1:3000/stream-with-header',
-        timeout: 20000,
-        enableChunked: true,
-        enableChunkedBuffer: false,
-        header: {}
-    });
+export function streamWithHeaderNoBuffer(log) {
+    return stream({ url: `${BASE}/stream-with-header`, ext: { timeout: 20000 }, enableChunkedBuffer: false }, log);
 }

@@ -1,4 +1,14 @@
 <view class="page">
-    <view class="action-vew" bind:tap="onTapTimeout">timeout</view>
-    <view class="action-vew" bind:tap="onTapAbort">abort</view>
+    <view class="result">{{result}}</view>
+
+    <view class="s-header">取消 / 超时 / 重试 / 缓存</view>
+    <view class="action-vew" bind:tap="onTapTimeout">timeout（→ RequestError TIMEOUT）</view>
+    <view class="action-vew" bind:tap="onTapAbort">abort（→ RequestError CANCELLED）</view>
+    <view class="action-vew" bind:tap="onTapRetry">retry（仅瞬态错误重试）</view>
+    <view class="action-vew" bind:tap="onTapCache">cache（maxAge 连调命中）</view>
+
+    <view class="s-header">错误模型对照</view>
+    <view class="note">库动作 → RequestError(带 code)；原生失败 → 原样透传(无 code)；HTTP 非 2xx 不算错误</view>
+    <view class="action-vew" bind:tap="onTapHttpError">HTTP 500（走 success，statusCode 透传）</view>
+    <view class="action-vew" bind:tap="onTapNativeError">原生网络错误（errMsg 原样透传）</view>
 </view>

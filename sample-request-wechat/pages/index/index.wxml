@@ -1,7 +1,7 @@
 <view class="page">
-    <view class="route-view" bind:tap="onTap" data-method="methods">HTTP Methods</view>
-    <view class="route-view" bind:tap="onTap" data-method="control">HTTP Control</view>
-    <view class="route-view" bind:tap="onTap" data-method="stream">HTTP Stream</view>
-    <view class="route-view" bind:tap="onTap" data-method="mount">mount request</view>
-    <view class="route-view" bind:tap="onTap" data-method="custom">Custom request()</view>
+    <view class="route-view" bind:tap="onTap" data-method="methods">HTTP Methods & canonical headers</view>
+    <view class="route-view" bind:tap="onTap" data-method="control">Control（取消/超时/重试/缓存/错误模型）</view>
+    <view class="route-view" bind:tap="onTap" data-method="stream">Stream（chunked，wx 专有）</view>
+    <view class="route-view" bind:tap="onTap" data-method="custom">Custom request()（独立实例 + 洋葱序）</view>
+    <view class="route-view" bind:tap="onTap" data-method="method-mw">Method-level Interceptors（createMethod）</view>
 </view>

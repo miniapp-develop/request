@@ -1,0 +1,66 @@
+{
+  "name": "@mini-dev/request-wx",
+  "version": "0.4.0",
+  "description": "cross-miniprogram request helper — WeChat (wx) platform package",
+  "license": "ISC",
+  "author": "xesam",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xesam/minidev-request.git",
+    "directory": "packages/wx"
+  },
+  "bugs": {
+    "url": "https://github.com/xesam/minidev-request/issues"
+  },
+  "homepage": "https://github.com/xesam/minidev-request#readme",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "miniprogram": "dist/cjs",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "rimraf dist && tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "@mini-dev/request": "workspace:*",
+    "koa-compose": "catalog:"
+  },
+  "devDependencies": {
+    "@types/jest": "catalog:",
+    "@types/node": "catalog:",
+    "jest": "catalog:",
+    "rimraf": "catalog:",
+    "ts-jest": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  },
+  "keywords": [
+    "miniapp",
+    "miniprogram",
+    "request",
+    "wechat",
+    "wx"
+  ]
+}

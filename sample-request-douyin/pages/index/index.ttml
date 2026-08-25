@@ -1,0 +1,30 @@
+<view class="container">
+    <view class="header">@mini-dev/request (Douyin)</view>
+    <view class="result">{{result}}</view>
+
+    <view class="section-title">1 · 基础请求 + canonical headers</view>
+    <view class="action" bindtap="onTapGet">GET（params → query）</view>
+    <view class="action" bindtap="onTapPost">POST（data 请求体 + headers）</view>
+    <view class="action" bindtap="onTapCanonical">canonical headers（复数，跨平台一致）</view>
+
+    <view class="section-title">2 · 两段式拦截器洋葱序</view>
+    <view class="action" bindtap="onTapInterceptor">A、B 两对（reqB→reqA→核心→resA→resB）</view>
+
+    <view class="section-title">3 · 取消 / 超时 / 重试 / 缓存</view>
+    <view class="action" bindtap="onTapAbort">abort 取消（signal → CANCELLED）</view>
+    <view class="action" bindtap="onTapTimeout">timeout 超时（→ TIMEOUT）</view>
+    <view class="action" bindtap="onTapRetry">retry 重试（仅瞬态原生错误）</view>
+    <view class="action" bindtap="onTapCache">cache 缓存（maxAge，连调命中）</view>
+
+    <view class="section-title">4 · 错误模型对照</view>
+    <view class="action" bindtap="onTapHttpError">HTTP 500（走 success，statusCode 透传）</view>
+    <view class="action" bindtap="onTapNativeError">原生网络错误（原样透传，无 code）</view>
+
+    <view class="section-title">5 · 独立实例</view>
+    <view class="action" bindtap="onTapCreate">createRequest() 独立实例</view>
+
+    <view class="section-title">6 · 方法级拦截器（createMethod）</view>
+    <view class="action" bindtap="onTapMwDefault">方法默认拦截器（log + auth）</view>
+    <view class="action" bindtap="onTapMwShortCircuit">短路核心（不调 next，mock 返回）</view>
+    <view class="action" bindtap="onTapMwRetryDelay">retryDelay 自定义退避</view>
+</view>

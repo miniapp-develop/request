@@ -1,38 +1,24 @@
 {
-    "name": "@mini-dev/request",
-    "version": "0.3.4",
-    "description": "miniapp request",
-    "miniprogram": "libs",
-    "main": "libs/index.js",
-    "files": [
-        "libs"
-    ],
-    "scripts": {
-        "test": "jest"
-    },
-    "jest": {
-        "testMatch": [
-            "<rootDir>/__tests__/**.test.js"
-        ]
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/xesam/minidev-request.git"
-    },
-    "bugs": {
-        "url": "https://github.com/xesam/minidev-request/issues"
-    },
-    "homepage": "https://github.com/xesam/minidev-request#readme",
-    "devDependencies": {
-        "jest": "^29.7.0"
-    },
-    "keywords": [
-        "miniapp",
-        "weapp",
-        "request",
-        "小程序",
-        "网络请求"
-    ],
-    "author": "xesam",
-    "license": "ISC"
+  "name": "minidev-request",
+  "version": "0.4.0",
+  "private": true,
+  "description": "cross-miniprogram request helper (monorepo: core + per-platform packages)",
+  "license": "ISC",
+  "scripts": {
+    "dev:server": "pnpm -r --filter './sample-server' run dev",
+    "clean": "pnpm -r --filter './packages/**' run clean",
+    "build": "pnpm -r --filter './packages/**' run build",
+    "typecheck": "pnpm --filter @mini-dev/request run build && pnpm -r --filter './packages/**' run typecheck",
+    "test": "pnpm -r --filter './packages/**' run build && pnpm -r --filter './packages/**' run test",
+    "verify-samples": "pnpm run build && node scripts/verify-samples.cjs",
+    "publish:all": "pnpm -r --filter './packages/**' publish --no-git-checks",
+    "release": "pnpm run build && pnpm -r --filter './packages/**' publish --no-git-checks"
+  },
+  "devDependencies": {
+    "rimraf": "catalog:"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.13.1"
 }

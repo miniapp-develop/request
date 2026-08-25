@@ -1,0 +1,13 @@
+{
+  "name": "sample-request-alipay",
+  "version": "0.0.0",
+  "private": true,
+  "main": "app.js",
+  "dependencies": {
+    "@mini-dev/request-my": "workspace:*",
+    "@mini-dev/request": "workspace:*",
+    "koa-compose": "catalog:"
+  },
+  "license": "ISC",
+  "description": "@mini-dev/request-my 支付宝小程序示例"
+}

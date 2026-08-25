@@ -6,7 +6,9 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@mini-dev/request": "file:.."
+        "@mini-dev/request-wx": "workspace:*",
+        "@mini-dev/request": "workspace:*",
+        "koa-compose": "catalog:"
     },
     "keywords": [],
     "author": "",

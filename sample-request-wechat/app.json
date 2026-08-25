@@ -4,8 +4,8 @@
         "pages/methods/index",
         "pages/control/index",
         "pages/stream/index",
-        "pages/mount/index",
-        "pages/custom/index"
+        "pages/custom/index",
+        "pages/method-mw/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
